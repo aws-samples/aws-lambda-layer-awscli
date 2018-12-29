@@ -8,9 +8,6 @@ docker cp ${CONTAINER}:/opt/awscli/bin/ layer/awscli/
 docker rm -f ${CONTAINER}
 
 mv layer/awscli/site-packages/* layer/awscli/
-
-# cd layer/awscli/; ln -sf bin/aws aws
-#cd layer/awscli/; ln -sf bin/aws .
 cp layer/awscli/bin/aws layer/awscli/aws
 # remove unnecessary files to reduce the size
 rm -rf layer/awscli/pip* layer/awscli/setuptools* layer/awscli/awscli/examples
