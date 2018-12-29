@@ -50,6 +50,15 @@ layer-all: layer-zip layer-upload layer-publish
 invoke:
 	@aws --region $(LAMBDA_REGION) lambda invoke --function-name $(LAMBDA_FUNC_NAME)  \
 	--payload "" lambda.output --log-type Tail | jq -r .LogResult | base64 -d	
+	
+add-layer-version-permission:
+	@aws --region $(LAMBDA_REGION) lambda add-layer-version-permission \
+	--layer-name $(LAYER_NAME) \
+	--version-number $(LAYER_VER) \
+	--statement-id public-all \
+	--action lambda:GetLayerVersion \
+	--principal '*'
+	
 
 all: build layer-upload layer-publish
 	
