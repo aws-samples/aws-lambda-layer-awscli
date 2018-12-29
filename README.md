@@ -3,7 +3,7 @@
 
 
 # Layer ARN
-`arn:aws:lambda:ap-northeast-1:903779448426:layer:awscli-layer:11`
+`arn:aws:lambda:ap-northeast-1:903779448426:layer:awscli-layer:14`
 
 # create lambda func with awscli layer
 ```
