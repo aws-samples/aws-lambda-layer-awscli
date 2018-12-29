@@ -44,7 +44,7 @@ update-func: func-zip
 	--zip-file fileb://func-bundle.zip
 	
 func-all: func-zip update-func
-layer-all: layer-zip layer-upload layer-publish
+layer-all: build layer-upload layer-publish
 
 
 invoke:
