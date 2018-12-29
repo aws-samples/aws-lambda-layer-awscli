@@ -1,13 +1,13 @@
 # lambda-layer-awscli
-`lambda-layer-awscli` is a public AWS Lambda Layer for AWS CLI
+`lambda-layer-awscli` is a AWS Lambda Layer for AWS CLI
 
 
 # Layer ARN
-`arn:aws:lambda:ap-northeast-1:903779448426:layer:awscli-layer:11`
+`arn:aws:lambda:ap-northeast-1:903779448426:layer:awscli-layer:14`
 
 # create lambda func with awscli layer
 ```
-$ LAMBDA_LAYERS=arn:aws:lambda:ap-northeast-1:903779448426:layer:awscli-layer:11 make create-func 
+$ LAMBDA_LAYERS=arn:aws:lambda:ap-northeast-1:903779448426:layer:awscli-layer:14 make create-func 
 ```
 
 # invoke function
