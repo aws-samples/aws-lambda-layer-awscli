@@ -1,5 +1,5 @@
 # lambda-layer-awscli
-`lambda-layer-awscli` is a public AWS Lambda Layer for AWS CLI
+`lambda-layer-awscli` is a AWS Lambda Layer for AWS CLI
 
 
 # Layer ARN
