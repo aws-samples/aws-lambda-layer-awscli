@@ -2,7 +2,7 @@
 #
 # This script is a Lambda custom fucntion that watches the Amazon ECS Task state changes 
 # and print the task public IP address when new task is RUNNING
-#
+# check https://twitter.com/pahudnet/status/1080491306420363264 for screenshot
 
 
 echo "====[EVENT]===="
