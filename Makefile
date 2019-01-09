@@ -2,8 +2,8 @@ LAYER_NAME ?= awscli-layer2
 LAYER_DESC ?= awscli-layer2
 S3BUCKET ?= pahud-tmp-nrt
 LAMBDA_REGION ?= ap-northeast-1
-LAMBDA_FUNC_NAME ?= awscli-layer-test-func
-LAMBDA_FUNC_DESC ?= awscli-layer-test-func
+LAMBDA_FUNC_NAME ?= awscli-layer-test-func2
+LAMBDA_FUNC_DESC ?= awscli-layer-test-func2
 LAMBDA_ROLE_ARN ?= arn:aws:iam::YOUR_AWS_ACCOUNT_ID:role/EKSLambdaDrainer
 
 build:
@@ -34,6 +34,7 @@ create-func: func-zip
 	--runtime provided \
 	--role  $(LAMBDA_ROLE_ARN) \
 	--timeout 30 \
+	--memory-size 512 \
 	--layers $(LAMBDA_LAYERS) \
 	--handler main \
 	--zip-file fileb://func-bundle.zip 
