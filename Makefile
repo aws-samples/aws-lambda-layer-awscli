@@ -1,10 +1,10 @@
-LAYER_NAME ?= awscli-layer
-LAYER_DESC ?= awscli-layer
+LAYER_NAME ?= awscli-layer2
+LAYER_DESC ?= awscli-layer2
 S3BUCKET ?= pahud-tmp-nrt
 LAMBDA_REGION ?= ap-northeast-1
 LAMBDA_FUNC_NAME ?= awscli-layer-test-func
 LAMBDA_FUNC_DESC ?= awscli-layer-test-func
-LAMBDA_ROLE_ARN ?= arn:aws:iam::903779448426:role/EKSLambdaDrainer
+LAMBDA_ROLE_ARN ?= arn:aws:iam::YOUR_AWS_ACCOUNT_ID:role/EKSLambdaDrainer
 
 build:
 	@bash build.sh
@@ -64,6 +64,10 @@ all: build layer-upload layer-publish
 	
 clean:
 	rm -rf awscli-bundle* layer layer.zip func-bundle.zip lambda.output
+	
+
+delete-func:
+	@aws --region $(LAMBDA_REGION) lambda delete-function --function-name $(LAMBDA_FUNC_NAME)
 	
 clean-all: clean
 	@aws --region $(LAMBDA_REGION) lambda delete-function --function-name $(LAMBDA_FUNC_NAME)

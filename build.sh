@@ -18,4 +18,4 @@ wget https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
 mv jq-linux64 layer/awscli/jq
 chmod +x layer/awscli/jq
 
-cd layer; zip -r ../layer.zip *
+# cd layer; zip -r ../layer.zip *
