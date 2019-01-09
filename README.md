@@ -103,16 +103,13 @@ $ LAMBDA_LAYERS=LAMBDA_LAYER_VERSION_ARN make create-func
 
 # invoke function
 
+this will execute `main.sh` in the lambda function zip bundle. Check the [sample](./main.sh).
+
 ```
 $ make invoke
 START RequestId: 50aaed4a-0ba1-11e9-9383-7d95168f3155 Version: $LATEST
 =========[RESPONSE]=======
 aws-cli/1.16.81 Python/2.7.12 Linux/4.14.77-70.59.amzn1.x86_64 botocore/1.12.71
-{
-    "Account": "YOUR_AWS_ACCOUNT_ID", 
-    "UserId": "AROAJFR4LL2ABRRXEKOUC:awscli-layer-test-func", 
-    "Arn": "arn:aws:sts::YOUR_AWS_ACCOUNT_ID:assumed-role/EKSLambdaDrainer/awscli-layer-test-func"
-}
 =========[/RESPONSE]=======
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
