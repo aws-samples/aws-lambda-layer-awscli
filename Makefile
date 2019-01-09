@@ -4,7 +4,7 @@ S3BUCKET ?= pahud-tmp-nrt
 LAMBDA_REGION ?= ap-northeast-1
 LAMBDA_FUNC_NAME ?= awscli-layer-test-func
 LAMBDA_FUNC_DESC ?= awscli-layer-test-func
-LAMBDA_ROLE_ARN ?= arn:aws:iam::YOUR_AWS_ACCOUNT_ID:role/EKSLambdaDrainer
+LAMBDA_ROLE_ARN ?= arn:aws:iam::YOUR_AWS_ACCOUNT_ID:role/LambdaAWSCliRole
 
 build:
 	@bash build.sh
