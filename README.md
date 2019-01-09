@@ -67,7 +67,7 @@ edit the `Makefile`
 | **LAYER_DESC**       | Layer Description                                            |                    |
 | **INPUT_JSON**       | input json payload file for lambda invocation                |                    |
 | **S3BUCKET**         | Your S3 bucket to store the intermediate Lambda bundle zip.<br />Make sure the S3 bucket in the same region with your Lambda function to deploy. | YES                |
-| **LAMBDA_REGION**    | The region code to deploy your Lambda function               |                    |
+| **LAMBDA_REGION**    | The region code to deploy your Lambda function               | Optional           |
 | **LAMBDA_FUNC_NAME** | Lambda function name                                         |                    |
 | **LAMBDA_ROLE_ARN**  | Lambda IAM role ARN                                          | Optional(for function only)            |
 
