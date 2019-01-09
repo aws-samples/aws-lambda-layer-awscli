@@ -3,6 +3,8 @@
 
 # Layer structure
 
+Layer will be installed into `/opt/awscli` in your lambda runtime with the structure tree as below:
+
 ```
 └── awscli
     ├── aws
