@@ -1,9 +1,9 @@
-LAYER_NAME ?= awscli-layer2
-LAYER_DESC ?= awscli-layer2
+LAYER_NAME ?= awscli-layer
+LAYER_DESC ?= awscli-layer
 S3BUCKET ?= pahud-tmp-nrt
 LAMBDA_REGION ?= ap-northeast-1
-LAMBDA_FUNC_NAME ?= awscli-layer-test-func2
-LAMBDA_FUNC_DESC ?= awscli-layer-test-func2
+LAMBDA_FUNC_NAME ?= awscli-layer-test-func
+LAMBDA_FUNC_DESC ?= awscli-layer-test-func
 LAMBDA_ROLE_ARN ?= arn:aws:iam::YOUR_AWS_ACCOUNT_ID:role/EKSLambdaDrainer
 
 build:
