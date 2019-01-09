@@ -1,6 +1,11 @@
 # lambda-layer-awscli
 `lambda-layer-awscli` is a AWS Lambda Layer for AWS CLI
 
+# Features
+- [x] build your own `awscli` layer from scratch with the latest version of `awscli`
+- [x] ships with `jq` and potential other useful utilities
+- [x] easy to build, ship and invoke your lambda function
+
 # Layer structure
 
 Layer will be installed into `/opt/awscli` in your lambda runtime with the structure tree as below:
