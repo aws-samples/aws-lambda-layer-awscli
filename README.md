@@ -112,6 +112,11 @@ this will execute `main.sh` in the lambda function zip bundle. Check the [sample
 
 ```
 $ make invoke
+```
+
+response:
+
+```
 START RequestId: 3a3f0718-13b8-11e9-9d26-8f14b26be384 Version: $LATEST
 =========[RESPONSE]=======
 aws-cli/1.16.85 Python/2.7.12 Linux/4.14.88-72.73.amzn1.x86_64 botocore/1.12.75
