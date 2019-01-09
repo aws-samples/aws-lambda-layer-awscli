@@ -112,14 +112,14 @@ this will execute `main.sh` in the lambda function zip bundle. Check the [sample
 
 ```
 $ make invoke
-START RequestId: 50aaed4a-0ba1-11e9-9383-7d95168f3155 Version: $LATEST
+START RequestId: 3a3f0718-13b8-11e9-9d26-8f14b26be384 Version: $LATEST
 =========[RESPONSE]=======
-aws-cli/1.16.81 Python/2.7.12 Linux/4.14.77-70.59.amzn1.x86_64 botocore/1.12.71
+aws-cli/1.16.85 Python/2.7.12 Linux/4.14.88-72.73.amzn1.x86_64 botocore/1.12.75
 =========[/RESPONSE]=======
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
-100   286  100    16  100   270    400   6762 --:--:-- --:--:-- --:--:--  6923
+100    95  100    16  100    79   1145   5653 --:--:-- --:--:-- --:--:--  6076
 {"status":"OK"}
-END RequestId: 50aaed4a-0ba1-11e9-9383-7d95168f3155
-REPORT RequestId: 50aaed4a-0ba1-11e9-9383-7d95168f3155  Init Duration: 9.27 ms  Duration: 12219.37 ms Billed Duration: 12300 ms       Memory Size: 128 MB     Max Memory Used: 57 MB
+END RequestId: 3a3f0718-13b8-11e9-9d26-8f14b26be384
+REPORT RequestId: 3a3f0718-13b8-11e9-9d26-8f14b26be384  Duration: 1059.15 ms    Billed Duration: 1100 ms        Memory Size: 512 MBMax Memory Used: 69 MB
 ```
