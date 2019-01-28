@@ -128,3 +128,96 @@ aws-cli/1.16.85 Python/2.7.12 Linux/4.14.88-72.73.amzn1.x86_64 botocore/1.12.75
 END RequestId: 3a3f0718-13b8-11e9-9d26-8f14b26be384
 REPORT RequestId: 3a3f0718-13b8-11e9-9d26-8f14b26be384  Duration: 1059.15 ms    Billed Duration: 1100 ms        Memory Size: 512 MBMax Memory Used: 69 MB
 ```
+
+# local testing
+
+edit your `main.sh` as below:
+
+```
+#!/bin/bash
+
+PATH=$PATH:/opt/awscli
+
+echo "---[payload]---"
+stdin=$(test -s /dev/stdin && cat -)
+
+if [ "${stdin}X" != "X" ]; then
+    # got stdin
+    payload="$stdin"
+else
+    payload="$1"
+fi
+
+echo $payload
+
+instanceId=$(echo $payload | jq -r .instanceId)
+echo "---[/payload]---"
+echo "instanceId=$instanceId"
+
+# your business logic here to handle $instanceId
+#aws --version 2>&1
+
+exit 0
+
+```
+
+# test from local 
+
+You can pass the payload as the shell argument
+
+```
+$ bash main.sh '{"instanceId":"i-12345"}'
+---[payload]---
+{"instanceId":"i-12345"}
+---[/payload]---
+instanceId=i-12345
+```
+or through the pipeline
+```
+ $ echo '{"instanceId":"i-12345"}' | bash main.sh
+---[payload]---
+{"instanceId":"i-12345"}
+---[/payload]---
+instanceId=i-12345
+```
+
+OK update function and invoke with this payload
+```
+$ PAYLOAD='{"instanceId":"i-12345"}' make update-func invoke
+{
+    "Layers": [
+        {
+            "CodeSize": 11418917,
+            "Arn": "arn:aws-cn:lambda:cn-northwest-1:xxxxxxxx:layer:awscli-layer:5"
+        }
+    ],
+    "CodeSha256": "BgNz/g85/JEuie/cYqQfjp6jfK1sbyFeRGjBfcS/xdY=",
+    "FunctionName": "awscli-layer-test-func",
+    "CodeSize": 1002,
+    "RevisionId": "0631c90b-836c-469c-8001-257ac3d0ba7b",
+    "MemorySize": 512,
+    "FunctionArn": "arn:aws-cn:lambda:cn-northwest-1:xxxxxxxx:function:awscli-layer-test-func",
+    "Version": "$LATEST",
+    "Role": "arn:aws-cn:iam::xxxxxxxx:role/service-role/myLambdaRole",
+    "Timeout": 30,
+    "LastModified": "2019-01-28T19:54:03.802+0000",
+    "Handler": "main",
+    "Runtime": "provided",
+    "Description": "awscli-layer-test-func"
+}
+START RequestId: 22ab1fe1-5edd-48af-9d7d-324a2d02efa6 Version: $LATEST
+=========[RESPONSE]=======
+---[payload]---
+{"instanceId":"i-12345"}
+---[/payload]---
+instanceId=i-12345
+=========[/RESPONSE]=======
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    92  100    16  100    76    878   4174 --:--:-- --:--:-- --:--:--  4222
+{"status":"OK"}
+END RequestId: 22ab1fe1-5edd-48af-9d7d-324a2d02efa6
+REPORT RequestId: 22ab1fe1-5edd-48af-9d7d-324a2d02efa6  Duration: 187.60 ms     Billed Duration: 200 ms         Memory Size: 512 MB     Max Memory Used: 18 MB
+9801a7a9620b:lambda-layer-awscli hunhsieh $
+```
+You can develop and test your lambda function locally in this way.
