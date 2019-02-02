@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Example API
+Resources:
+  SampleFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: main
+      CodeUri: func-bundle.zip
+      Runtime: provided
+      Layers:
+        - arn:aws:lambda:ap-northeast-1:903779448426:layer:awscli-layer:20
+      MemorySize: 512
+      # Policies: 
+      #   - AWSLambdaBasicExecutionRole
+      Role: arn:aws:iam::903779448426:role/LambdaExecGetCE
+      Timeout: 10
+      Events:
+        GetResource:
+          Type: Api
+          Properties:
+            Path: /demo
+            Method: any
+
+Outputs:
+  DemoApiURL:
+    Description: URL for application
+    Value: !Sub 'https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/demo'
+    Export:
+      Name: !Sub 'DemoApiURL-${AWS::StackName}'
