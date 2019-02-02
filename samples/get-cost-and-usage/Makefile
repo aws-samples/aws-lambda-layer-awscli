@@ -83,6 +83,11 @@ sam-deploy:
 	aws --region $(LAMBDA_REGION) cloudformation describe-stacks --stack-name "$(LAMBDA_FUNC_NAME)-stack" --query 'Stacks[0].Outputs'
 
 
+sam-destroy:
+	# destroy the stack	
+	aws --region $(LAMBDA_REGION) cloudformation delete-stack --stack-name "$(LAMBDA_FUNC_NAME)-stack"
+
+
 clean:
 	rm -rf awscli-bundle* layer layer.zip func-bundle.zip lambda.output
 	
