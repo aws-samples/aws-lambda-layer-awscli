@@ -1,5 +1,7 @@
 # get-cost-and-usage 
 
+_First, check the cool demo video in my 👉 [tweet](https://twitter.com/pahudnet/status/1091556349043924993)!_ 😎
+
 This sample generates API Gateway endpoint and Lambda function with `SAM`.
 
 
