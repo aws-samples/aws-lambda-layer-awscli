@@ -2,7 +2,7 @@
 
 _First, check the cool demo video in my 👉 [tweet](https://twitter.com/pahudnet/status/1091556349043924993)!_ 😎
 
-![](https://pbs.twimg.com/media/Dyh20-4V4AAxGhy.jpg:large)
+![](https://pbs.twimg.com/media/Dyh20-4V4AAxGhy.jpg:small)
 
 This sample generates API Gateway endpoint and Lambda function with `SAM`.
 
@@ -86,4 +86,10 @@ Try it
 ```
 
 You got the response!
+
+## Build your Siri shortcut
+
+construct your HTTP request in Siri shortcut and make sure you specify `x-api-key` in the http request header.
+
+![](https://pbs.twimg.com/media/DyiWd7WU0Acyeyq.jpg:small)
 
