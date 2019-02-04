@@ -1,5 +1,5 @@
-LAYER_NAME ?= awscli-layer
-LAYER_DESC ?= awscli-layer
+LAYER_NAME ?= awscli-layer-bc
+LAYER_DESC ?= awscli-layer-bc
 S3BUCKET ?= pahud-tmp-nrt
 LAMBDA_REGION ?= ap-northeast-1
 LAMBDA_FUNC_NAME ?= whats-my-spend

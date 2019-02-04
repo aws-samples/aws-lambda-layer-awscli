@@ -2,6 +2,8 @@
 
 _First, check the cool demo video in my 👉 [tweet](https://twitter.com/pahudnet/status/1091556349043924993)!_ 😎
 
+![](https://pbs.twimg.com/media/Dyh20-4V4AAxGhy.jpg:large)
+
 This sample generates API Gateway endpoint and Lambda function with `SAM`.
 
 
@@ -11,7 +13,7 @@ execute the shippped `main.sh` and you should be able to see the results like th
 
 ```
 $ bash main.sh 
-{"body": "70.481682679", "headers": {"content-type": "text/plain"}, "statusCode": 200}
+{"body": "本月到目前 155.55 , 本月到月底預估 1231.47", "headers": {"content-type": "text/plain"}, "statusCode": 200}
 ```
 **please note**
 1. this script will query your aws cost and usage. You may need to modify the period specified in `main.sh`)
@@ -56,17 +58,31 @@ aws --region ap-northeast-1 cloudformation describe-stacks --stack-name "whats-m
         "Description": "URL for application", 
         "ExportName": "DemoApiURL-whats-my-spend-stack", 
         "OutputKey": "DemoApiURL", 
-        "OutputValue": "https://lqw1oaov02.execute-api.ap-northeast-1.amazonaws.com/Prod/demo"
+        "OutputValue": "https://{API_ID}.execute-api.ap-northeast-1.amazonaws.com/Prod/demo"
+    }, 
+    {
+        "Description": "API Key for the request", 
+        "ExportName": "DemoApiApiKey-whats-my-spend-stack", 
+        "OutputKey": "ApiKey", 
+        "OutputValue": "stgjwzmf0d"
     }
 ]
 
 ```
 The `OutputValue` of `DemoApiURL` would be the deployed API URL.
 
+Get the `value` of your API Key. Your API Key ID is the value of `OutputValue` of `OutputKey` above.
+
+```
+$ aws  apigateway  get-api-key --api-key stgjwzmf0d --include-value --query 'value' --output text
+<YOUR_API_KEY_VALUE>
+```
+
+
 Try it
 ```
-$ curl https://lqw1oaov02.execute-api.ap-northeast-1.amazonaws.com/Prod/demo
-70.481682679
+ $ curl -H 'x-api-key:<YOUR_API_KEY_VALUE>' https://{API_ID}.execute-api.ap-northeast-1.amazonaws.com/Prod/demo
+本月到目前 155.55 , 本月到月底預估 123
 ```
 
 You got the response!
