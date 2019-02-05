@@ -1,0 +1,5 @@
+*.zip
+*.output
+layer/
+sam-layer-packaged.yaml
+packaged.yaml

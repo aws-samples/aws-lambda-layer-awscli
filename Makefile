@@ -1,15 +1,18 @@
 LAYER_NAME ?= awscli-layer
 LAYER_DESC ?= awscli-layer
-S3BUCKET ?= pahud-tmp-cn-northwest-1
-LAMBDA_REGION ?= cn-northwest-1
+S3BUCKET ?= pahud-tmp-ap-northeast-1
+LAMBDA_REGION ?= ap-northeast-1
 LAMBDA_FUNC_NAME ?= awscli-layer-test-func
 LAMBDA_FUNC_DESC ?= awscli-layer-test-func
 LAMBDA_ROLE_ARN ?= arn:aws:iam::xxxxxxxx:role/service-role/myLambdaRole
 AWS_PROFILE ?= default
 PAYLOAD ?= {"foo":"bar"}
 
-build:
+build: layer-build
+
+layer-build:
 	@bash build.sh
+	@echo "[OK] Layer built under $(HOME)/layer directory"
 	
 layer-zip:
 	( cd layer; zip -r ../layer.zip * )
@@ -24,6 +27,31 @@ layer-publish:
 	--license-info "MIT" \
 	--content S3Bucket=$(S3BUCKET),S3Key=$(LAYER_NAME).zip \
 	--compatible-runtimes provided
+
+sam-layer-publish:
+	@docker run -ti \
+	-v $(PWD):/home/samcli/workdir \
+	-v $(HOME)/.aws:/home/samcli/.aws \
+	-w /home/samcli/workdir \
+	-e AWS_DEFAULT_REGION=$(LAMBDA_REGION) \
+	pahud/aws-sam-cli:latest sam package --template-file sam-layer.yaml --s3-bucket $(S3BUCKET) --output-template-file sam-layer-packaged.yaml
+	@echo "[OK] Now type 'make sam-layer-deploy' to deploy your Lambda layer with SAM"
+
+sam-layer-deploy:
+	@docker run -ti \
+	-v $(PWD):/home/samcli/workdir \
+	-v $(HOME)/.aws:/home/samcli/.aws \
+	-w /home/samcli/workdir \
+	-e AWS_DEFAULT_REGION=$(LAMBDA_REGION) \
+	pahud/aws-sam-cli:latest sam deploy --template-file ./sam-layer-packaged.yaml --stack-name "$(LAYER_NAME)-stack"
+	# print the cloudformation stack outputs
+	aws --region $(LAMBDA_REGION) cloudformation describe-stacks --stack-name "$(LAYER_NAME)-stack" --query 'Stacks[0].Outputs'
+	@echo "[OK] Layer version deployed."
+	
+sam-layer-destroy:
+	# destroy the layer stack	
+	aws --region $(LAMBDA_REGION) cloudformation delete-stack --stack-name "$(LAYER_NAME)-stack"
+	@echo "[OK] Layer version destroyed."
 	
 func-zip:
 	chmod +x main.sh
