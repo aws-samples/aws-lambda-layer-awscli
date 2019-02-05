@@ -122,7 +122,7 @@ $ LAMBDA_LAYERS=LAMBDA_LAYER_VERSION_ARN make create-func
 ```
 * specify the `LayerVersionArn` you just published above.
 
-You may also create your lambda function and API Gateway with `SAM`, check the sample `sam.yaml` and `Makefile` in [this folder](./samples/launch-ec2-instance/).
+You may also create your lambda function and API Gateway along with other resoruces with `SAM`, check the sample `sam.yaml` and `Makefile` in [this folder](./samples/launch-ec2-instance/).
 
 
 # invoke function
