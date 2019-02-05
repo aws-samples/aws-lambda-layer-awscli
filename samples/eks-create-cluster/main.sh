@@ -20,11 +20,17 @@ createCluster(){
 	ParameterKey=SubnetIds,ParameterValue=subnet-05b643f57a6997deb\\,subnet-09e79eb1dec82b7e2\\,subnet-0c365d97cbc75ceec
 }
 
-createCluster
+createCluster 2>&1 > /dev/null
 
-result="EKS集群創建中，請稍後..."
+if [ $? -eq 0 ]; then
+    result="EKS集群創建中，請稍後..."
+else
+    result="執行失敗"
+fi
 
 # echo the http response for API Gateway proxy integration
 cat << EOF
 {"body": "$result", "headers": {"content-type": "text/plain"}, "statusCode": 200}
 EOF
+
+exit 0

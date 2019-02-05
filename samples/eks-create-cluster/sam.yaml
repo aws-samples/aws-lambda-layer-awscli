@@ -35,7 +35,7 @@ Resources:
         swagger: "2.0"
         info:
           version: "1.0"
-          title: "siri-run-instance-stack"
+          title: !Sub "${AWS::StackName}"
           # host: "xxxx.execute-api.us-west-2.amazonaws.com"
         basePath: "/Prod"
         schemes:
