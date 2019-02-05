@@ -56,7 +56,7 @@ Layer will be installed into `/opt/awscli` in your lambda runtime with the struc
 # Layer ARN
 `arn:aws:lambda:ap-northeast-1:903779448426:layer:awscli-layer:15`
 
-# create your own awscli layer from scratch
+# create your own awscli layer
 
 
 edit the `Makefile`
@@ -70,6 +70,8 @@ edit the `Makefile`
 | **LAMBDA_REGION**    | The region code to deploy your Lambda function               | Optional           |
 | **LAMBDA_FUNC_NAME** | Lambda function name                                         |                    |
 | **LAMBDA_ROLE_ARN**  | Lambda IAM role ARN                                          | Optional(for function only)            |
+
+# OPTION #1 create Layer from scratch
 
 
 ```
@@ -96,6 +98,21 @@ response:
     "LicenseInfo": "MIT"
 }
 ```
+# OPTION #2 create Layer with SAM
+
+Alternatively, you may also create your Layer with SAM CLI
+
+```
+# build the layer from scratch 
+$ make layer-build 
+
+# package and deploy the layer with `SAM` CLI 
+$ make sam-layer-package sam-layer-deploy 
+
+# destroy the layer 
+$ make sam-layer-destroy
+```
+check [this issue](https://github.com/pahud/lambda-layer-awscli/issues/5) for detials
 
 
 
@@ -104,6 +121,8 @@ response:
 $ LAMBDA_LAYERS=LAMBDA_LAYER_VERSION_ARN make create-func 
 ```
 * specify the `LayerVersionArn` you just published above.
+
+You may also create your lambda function and API Gateway along with other resoruces with `SAM`, check the sample `sam.yaml` and `Makefile` in [this folder](./samples/launch-ec2-instance/).
 
 
 # invoke function
