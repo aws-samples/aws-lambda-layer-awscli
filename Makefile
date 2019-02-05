@@ -1,3 +1,4 @@
+ROOT ?= $(shell pwd)
 LAYER_NAME ?= awscli-layer
 LAYER_DESC ?= awscli-layer
 S3BUCKET ?= pahud-tmp-ap-northeast-1
@@ -12,7 +13,7 @@ build: layer-build
 
 layer-build:
 	@bash build.sh
-	@echo "[OK] Layer built under $(HOME)/layer directory"
+	@echo "[OK] Layer built under $(ROOT)/layer directory"
 	
 layer-zip:
 	( cd layer; zip -r ../layer.zip * )
@@ -28,7 +29,7 @@ layer-publish:
 	--content S3Bucket=$(S3BUCKET),S3Key=$(LAYER_NAME).zip \
 	--compatible-runtimes provided
 
-sam-layer-publish:
+sam-layer-package:
 	@docker run -ti \
 	-v $(PWD):/home/samcli/workdir \
 	-v $(HOME)/.aws:/home/samcli/.aws \
