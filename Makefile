@@ -59,8 +59,12 @@ sam-layer-destroy:
 	@echo "[OK] Layer version destroyed."
 	
 func-zip:
+	rm -rf ./lambda-bundle; mkdir ./lambda-bundle
 	chmod +x main.sh
-	zip -r func-bundle.zip bootstrap main.sh; ls -alh func-bundle.zip
+	cp main.sh bootstrap ./lambda-bundle;
+	cp Makefile.lambda ./lambda-bundle/Makefile;
+	cd ./lambda-bundle && \
+	zip -r ../func-bundle.zip *; ls -alh ../func-bundle.zip
 	
 create-func: func-zip
 	@aws --profile=$(AWS_PROFILE) --region $(LAMBDA_REGION) lambda create-function \

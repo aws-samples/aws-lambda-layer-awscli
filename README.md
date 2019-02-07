@@ -11,13 +11,14 @@
 Layer will be installed into `/opt/awscli` in your lambda runtime with the structure tree as below:
 
 ```
+.
 └── awscli
     ├── aws
     ├── awscli
-    ├── awscli-1.16.85-py2.7.egg-info
+    ├── awscli-1.16.99-py2.7.egg-info
     ├── bin
     ├── botocore
-    ├── botocore-1.12.75-py2.7.egg-info
+    ├── botocore-1.12.89-py2.7.egg-info
     ├── colorama
     ├── colorama-0.3.9-py2.7.egg-info
     ├── concurrent
@@ -30,16 +31,16 @@ Layer will be installed into `/opt/awscli` in your lambda runtime with the struc
     ├── jmespath
     ├── jmespath-0.9.3-py2.7.egg-info
     ├── jq
+    ├── make
     ├── pkg_resources
     ├── pyasn1
     ├── pyasn1-0.4.5-py2.7.egg-info
-    ├── python_dateutil-2.7.5-py2.7.egg-info
+    ├── python_dateutil-2.8.0-py2.7.egg-info
     ├── PyYAML-3.13-py2.7.egg-info
     ├── rsa
     ├── rsa-3.4.2-py2.7.egg-info
     ├── s3transfer
-    ├── s3transfer-0.1.13-py2.7.egg-info
-    ├── site-packages
+    ├── s3transfer-0.2.0-py2.7.egg-info
     ├── six-1.12.0-py2.7.egg-info
     ├── six.py
     ├── six.pyc
@@ -49,12 +50,12 @@ Layer will be installed into `/opt/awscli` in your lambda runtime with the struc
     ├── wheel-0.29.0.dist-info
     └── yaml
 
-31 directories, 6 files
+30 directories, 7 files
 ```
 
 
 # Layer ARN
-`arn:aws:lambda:ap-northeast-1:903779448426:layer:awscli-layer:15`
+`arn:aws:lambda:ap-northeast-1:903779448426:layer:layer-awscli-layer-stack:8`
 
 # create your own awscli layer
 
