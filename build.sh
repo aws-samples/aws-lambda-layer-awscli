@@ -1,7 +1,16 @@
 #!/bin/bash
 
-[ ! -d ./layer/awscli ] && mkdir -p ./layer/awscli
+#[ ! -d ./layer/awscli ] && mkdir -p ./layer/awscli
+
+# [ ! -d ./layer ] && mkdir -p ./layer
+
 docker build -t awscli:amazonlinux .
+CONTAINER=$(docker run -d awscli:amazonlinux false)
+docker cp ${CONTAINER}:/layer.zip layer.zip
+
+
+exit 0
+
 CONTAINER=$(docker run -d awscli:amazonlinux false)
 docker cp ${CONTAINER}:/opt/awscli/lib/python2.7/site-packages/ layer/awscli/
 docker cp ${CONTAINER}:/opt/awscli/bin/ layer/awscli/

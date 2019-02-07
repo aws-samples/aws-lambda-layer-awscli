@@ -1,19 +1,23 @@
 ROOT ?= $(shell pwd)
+AWS_ACCOUNT_ID := $(shell aws sts get-caller-identity --query 'Account' --output text)
 LAYER_NAME ?= awscli-layer
 LAYER_DESC ?= awscli-layer
 S3BUCKET ?= pahud-tmp-ap-northeast-1
 LAMBDA_REGION ?= ap-northeast-1
 LAMBDA_FUNC_NAME ?= awscli-layer-test-func
 LAMBDA_FUNC_DESC ?= awscli-layer-test-func
-LAMBDA_ROLE_ARN ?= arn:aws:iam::xxxxxxxx:role/service-role/myLambdaRole
+LAMBDA_ROLE_ARN ?= arn:aws:iam::$(AWS_ACCOUNT_ID):role/service-role/LambdaDefaultRole
 AWS_PROFILE ?= default
 PAYLOAD ?= {"foo":"bar"}
+
+.PHONY: build layer-build layer-zip layer-upload layer-publish sam-layer-package sam-layer-deploy sam-layer-destroy func-zip create-func update-func func-all layer-all invoke add-layer-version-permission all clean clean-all delete-func 
 
 build: layer-build
 
 layer-build:
 	@bash build.sh
-	@echo "[OK] Layer built under $(ROOT)/layer directory"
+	@echo "[OK] Layer built at ./layer.zip"
+	@ls -alh ./layer.zip
 	
 layer-zip:
 	( cd layer; zip -r ../layer.zip * )

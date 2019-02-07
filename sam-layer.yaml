@@ -7,7 +7,7 @@ Resources:
     Type: AWS::Serverless::LayerVersion
     Properties:
       LayerName: !Sub "layer-${AWS::StackName}"
-      ContentUri: ./layer
+      ContentUri: ./layer.zip
       CompatibleRuntimes: 
         - provided
       LicenseInfo: 'Available under the MIT-0 license.'
