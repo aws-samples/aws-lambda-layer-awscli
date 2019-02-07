@@ -8,11 +8,11 @@
 
 # Layer structure
 
-Layer will be installed into `/opt/awscli` in your lambda runtime with the structure tree as below:
+Layer will be installed into `/opt/awscli` in your lambda sandbox with the structure tree as below:
 
 ```
 .
-└── awscli
+└── /opt/awscli
     ├── aws
     ├── awscli
     ├── awscli-1.16.99-py2.7.egg-info
