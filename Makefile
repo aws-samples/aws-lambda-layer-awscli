@@ -52,11 +52,16 @@ sam-layer-deploy:
 	# print the cloudformation stack outputs
 	aws --region $(LAMBDA_REGION) cloudformation describe-stacks --stack-name "$(LAYER_NAME)-stack" --query 'Stacks[0].Outputs'
 	@echo "[OK] Layer version deployed."
-	
+
 sam-layer-destroy:
 	# destroy the layer stack	
 	aws --region $(LAMBDA_REGION) cloudformation delete-stack --stack-name "$(LAYER_NAME)-stack"
 	@echo "[OK] Layer version destroyed."
+	
+
+# Makefile for China regions	
+include cn.mk	
+
 	
 func-zip:
 	rm -rf ./lambda-bundle; mkdir ./lambda-bundle
