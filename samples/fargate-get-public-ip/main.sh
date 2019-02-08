@@ -39,4 +39,21 @@ echo "eni=$eni"
 echo "publicIp=$publicIp"
 
 
+# update route53
+cat << EOF > /tmp/update.json
+{
+    "Comment": "UPSERT a record ",
+    "Changes": [{
+    "Action": "UPSERT",
+    "ResourceRecordSet": {
+        "Name": "fargate.demo.pahud.net",
+        "Type": "A",
+        "TTL": 300,
+        "ResourceRecords": [{ "Value": "$publicIp"}]
+}}]
+}
+EOF
+
+aws route53 change-resource-record-sets --hosted-zone-id Z2N5MJJUEIAVLZ --change-batch file:///tmp/update.json
+
 exit 0
