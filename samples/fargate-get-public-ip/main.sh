@@ -11,6 +11,8 @@ echo "====[/EVENT]===="
 
 region=${AWS_REGION}
 
+clusterArn=$(echo $1 | jq -r '.detail.clusterArn')
+
 taskArn=$(echo "$1"  | \
 jq -r 'select(
     .["detail-type"]=="ECS Task State Change" and
@@ -25,7 +27,7 @@ if [ -z $taskArn ]; then
     exit 0
 fi
 
-eni=$(aws --region $region ecs describe-tasks --tasks $taskArn | \
+eni=$(aws --region $region ecs describe-tasks --tasks $taskArn --cluster $clusterArn | \
 jq -r '.tasks[0].attachments[0].details[] | select(.name=="networkInterfaceId").value')
 
 publicIp=$(aws --region $region ec2 describe-network-interfaces --network-interface-ids $eni | \
