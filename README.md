@@ -1,3 +1,5 @@
+![](https://travis-ci.org/pahud/lambda-layer-awscli.svg?branch=master)
+
 # lambda-layer-awscli
 `lambda-layer-awscli` is a AWS Lambda Layer for AWS CLI
 
