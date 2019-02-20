@@ -1,4 +1,18 @@
 AWSTemplateFormatVersion: '2010-09-09'
+
+Metadata:
+  AWS::ServerlessRepo::Application:
+    Name: lambda-layer-awscli
+    Description: "Lambda Layer for AWS CLI"
+    Author: Pahud Hsieh
+    SpdxLicenseId: Apache-2.0
+    LicenseUrl: LICENSE
+    ReadmeUrl: README.md
+    Labels: ['layer','lambda','awscli','cli', 'aws', 'bash']
+    HomePageUrl: https://github.com/pahud/lambda-layer-awscli
+    SemanticVersion: 1.0.0
+    SourceCodeUrl: https://github.com/pahud/lambda-layer-awscli
+
 Transform: AWS::Serverless-2016-10-31
 Description: Create a Layer
 
