@@ -1,8 +1,9 @@
 ![](https://travis-ci.org/pahud/lambda-layer-awscli.svg?branch=master)
+[![](https://img.shields.io/badge/Available-serverless%20app%20repository-blue.svg)](https://serverlessrepo.aws.amazon.com/#/applications/arn:aws:serverlessrepo:us-east-1:903779448426:applications~lambda-layer-awscli)
 
 # lambda-layer-awscli
 
-[![](https://img.shields.io/badge/Available-serverless%20app%20repository-blue.svg)](https://serverlessrepo.aws.amazon.com/#/applications/arn:aws:serverlessrepo:us-east-1:903779448426:applications~lambda-layer-awscli)
+
 
 
 `lambda-layer-awscli` is a AWS Lambda Layer for AWS CLI
