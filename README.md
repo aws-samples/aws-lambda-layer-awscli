@@ -63,13 +63,12 @@ Layer will be installed into `/opt/awscli` in your lambda sandbox with the struc
 ```
 
 
-# Layer ARN
-`arn:aws:lambda:ap-northeast-1:903779448426:layer:layer-awscli-layer-stack:8`
 
 # create your own awscli layer
 
+You have 3 options to create and deploy your awscli lambda layer. 
 
-edit the `Makefile`
+Before that, you must edit the `Makefile` fist.
 
 | Name                 | Description                                                  | required to update |
 | -------------------- | ------------------------------------------------------------ | ------------------ |
@@ -81,8 +80,51 @@ edit the `Makefile`
 | **LAMBDA_FUNC_NAME** | Lambda function name                                         |                    |
 | **LAMBDA_ROLE_ARN**  | Lambda IAM role ARN                                          | Optional(for function only)            |
 
-# OPTION #1 create Layer from scratch
 
+
+# OPTION #1 create from SAR(Serverless Application Repository)
+
+This is the recommended approach. We deploy the awscli lambda layer straight from `SAR(Serverless App Repository)`
+
+
+```
+$ aws --region us-east-1 serverlessrepo create-cloud-formation-template --application-id arn:aws:serverlessrepo:us-east-1:903779448426:applications/lambda-layer-awscli
+{
+    "Status": "PREPARING", 
+    "TemplateId": "89be5908-520b-4911-bde7-71bf73040e47", 
+    "CreationTime": "2019-02-20T14:51:56.826Z", 
+    "SemanticVersion": "1.0.0", 
+    "ExpirationTime": "2019-02-20T20:51:56.826Z", 
+    "ApplicationId": "arn:aws:serverlessrepo:us-east-1:903779448426:applications/lambda-layer-awscli", 
+    "TemplateUrl": ""
+}
+```
+Copy the `TemplateUrl` value and deploy with `cloudformation create-stack`
+
+
+```
+aws --region us-east-1 cloudformation create-stack --template-url {TemplateUrl} --stack-name {StackName} --capabilities CAPABILITY_AUTO_EXPAND
+```
+On stack create complete, get the stack outputs as below
+
+```
+$ aws --region us-east-1 cloudformation describe-stacks --stack-name {StackName} --query 'Stacks[0].Outputs'
+[
+    {
+        "Description": "ARN for the published Layer version", 
+        "ExportName": "LayerVersionArn-{StackName}", 
+        "OutputKey": "LayerVersionArn", 
+        "OutputValue": "arn:aws:lambda:us-east-1:123456789012:layer:layer-{StackName}:1"
+    }
+]
+```
+
+Now you got your own Lambda Layer Arn.
+
+
+# OPTION #2 create Layer from scratch
+
+You may also create your own awscli layer from scratch followed by the deployment.
 
 ```
 $ make build layer-zip layer-upload layer-publish
@@ -108,9 +150,9 @@ response:
     "LicenseInfo": "MIT"
 }
 ```
-# OPTION #2 create Layer with SAM
+# OPTION #3 create Layer with SAM CLI
 
-Alternatively, you may also create your Layer with SAM CLI
+Or alternatively, create your Layer with SAM CLI as below:
 
 ```
 # build the layer from scratch 
@@ -126,13 +168,22 @@ check [this issue](https://github.com/pahud/lambda-layer-awscli/issues/5) for de
 
 
 
+
 # create lambda func with your awscli layer
+
+OK. Now you have your own awscli layer deployed and you got the layer ARN. 
+Create your function with this layer as below:
+
+
 ```
 $ LAMBDA_LAYERS=LAMBDA_LAYER_VERSION_ARN make create-func 
 ```
 * specify the `LayerVersionArn` you just published above.
 
 You may also create your lambda function and API Gateway along with other resoruces with `SAM`, check the sample `sam.yaml` and `Makefile` in [this folder](./samples/launch-ec2-instance/).
+
+
+
 
 
 # invoke function
