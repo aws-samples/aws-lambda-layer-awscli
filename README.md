@@ -9,7 +9,7 @@
 `lambda-layer-awscli` is a AWS Lambda Layer for AWS CLI
 
 # Features
-- [x] build your own `awscli` layer from scratch with the latest version of `awscli`
+- [x] build your own `awscli` layer from scratch or simply from SAR(Serverless App Repository) with the latest version of `awscli` 
 - [x] ships `jq` that helps you parse the JSON payload
 - [x] ships `make` command [#6](https://github.com/pahud/lambda-layer-awscli/issues/6)
 - [x] easy to build, ship and invoke your lambda function
