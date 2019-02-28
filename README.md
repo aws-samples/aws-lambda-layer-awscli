@@ -99,6 +99,24 @@ $ aws --region us-east-1 serverlessrepo create-cloud-formation-template --applic
     "TemplateUrl": ""
 }
 ```
+please note your current IAM identity will need relevant `serverlessrepo` IAM policies. If you encounter `AccessDeniedException` error, you may attach an extra IAM inline policy like this in your current 
+IAM identity.(see [#13](https://github.com/pahud/lambda-layer-awscli/issues/13))
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "sar-allow-all",
+            "Effect": "Allow",
+            "Action": "serverlessrepo:*",
+            "Resource": "*"
+        }
+    ]
+}
+```
+
+
 Copy the `TemplateUrl` value and deploy with `cloudformation create-stack`
 
 
