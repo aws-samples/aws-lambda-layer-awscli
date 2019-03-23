@@ -1,0 +1,54 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Parameters:
+  LambdaRoleArn:
+    Type: String
+  CloudMapServiceId:
+    Type: String
+
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Get Fargate public IP and update Cloud Map API
+Resources:
+  Layer:
+    Type: AWS::Serverless::Application
+    Properties:
+      Location:
+        ApplicationId: arn:aws:serverlessrepo:us-east-1:903779448426:applications/lambda-layer-awscli
+        SemanticVersion: 1.0.0
+      # Parameters:
+      #   ClusterName: !Ref ClusterName
+      #   LambdaRoleArn: !Ref LambdaRoleArn
+      #   FunctionName: !Sub "eks-auth-update-hook-${AWS::StackName}"
+  Func:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: main
+      CodeUri: ./func-bundle
+      Runtime: provided
+      Environment:
+        Variables:
+          CM_SERVICE_ID: !Ref CloudMapServiceId
+      Layers:
+        - !GetAtt Layer.Outputs.LayerVersionArn
+        # - !Sub "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:layer:awscli-layer:5"
+      MemorySize: 512
+      Role: !Ref LambdaRoleArn
+      Timeout: 10
+      Events:
+        ECSEvent:
+          Type: CloudWatchEvent
+          Properties:
+            Pattern:
+              source: 
+                - "aws.ecs"
+              detail-type:
+                - "ECS Task State Change"
+    
+    
+
+Outputs:
+  LambdaFunc:
+    Description: Lambda Fucntion ARN
+    Value: !GetAtt Func.Arn
+    # Export:
+    #   Name: !Sub 'LambdaFuncArn-${AWS::StackName}'

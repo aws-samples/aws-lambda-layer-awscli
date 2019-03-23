@@ -4,6 +4,7 @@
 # and print the task public IP address when new task is RUNNING
 # check https://twitter.com/pahudnet/status/1080491306420363264 for screenshot
 
+CM_SERVICE_ID=${CM_SERVICE_ID-unknown}
 
 # update with cloudmap
 cm_register_instance() {
@@ -43,7 +44,7 @@ jq -r 'select(
     .source=="aws.ecs" and
     .detail.lastStatus=="STOPPED" and 
     .detail.desiredStatus=="STOPPED" and 
-    .detail.connectivity=="CONNECTED"
+    .detail.connectivity=="DISCONNECTED"
     )  | .detail.taskArn')
     
 if [[ -z $taskArnRunning && -z  $taskArnStopped ]]; then
@@ -62,10 +63,10 @@ if [ ! -z $taskArnRunning ]; then
     echo "eni=$eni"
     echo "publicIp=$publicIp"
     echo "new task running - register cloudmap now"
-    cm_register_instance 'srv-emzgomv5qbxsqtd4' "${taskArnRunning##*/}" "$publicIp"
+    cm_register_instance "${CM_SERVICE_ID}" "${taskArnRunning##*/}" "$publicIp"
 elif [ ! -z $taskArnStopped ]; then
     echo "task stopped - deregister cloudmap now"
-    cm_deregister_instance 'srv-emzgomv5qbxsqtd4' "${taskArnStopped##*/}"
+    cm_deregister_instance "${CM_SERVICE_ID}" "${taskArnStopped##*/}"
 fi
 
 exit 0
