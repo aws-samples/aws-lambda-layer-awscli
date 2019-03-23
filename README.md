@@ -1,4 +1,5 @@
 ![](https://travis-ci.org/pahud/lambda-layer-awscli.svg?branch=master)
+![](https://codebuild.us-west-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiTmdEamFTUURGWEZHUTdhWHlnSEtrWWZjNUMxOS9iWTgxUUozMkI5MVl1V0FsdlRQZGVrVnhEZFZodGRqZ3ZJbnVsKzBveEdPOFF0aUthUGNTTWVkSnJVPSIsIml2UGFyYW1ldGVyU3BlYyI6InVVeGg5cnJNandDNlN4MjYiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
 [![](https://img.shields.io/badge/Available-serverless%20app%20repository-blue.svg)](https://serverlessrepo.aws.amazon.com/#/applications/arn:aws:serverlessrepo:us-east-1:903779448426:applications~lambda-layer-awscli)
 
 # lambda-layer-awscli
