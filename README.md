@@ -320,3 +320,8 @@ REPORT RequestId: 22ab1fe1-5edd-48af-9d7d-324a2d02efa6  Duration: 187.60 ms     
 9801a7a9620b:lambda-layer-awscli hunhsieh $
 ```
 You can develop and test your lambda function locally in this way.
+
+## License Summary
+
+This sample code is made available under the MIT-0 license. See the LICENSE file.
+
