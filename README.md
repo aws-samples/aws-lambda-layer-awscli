@@ -12,9 +12,9 @@
 # Features
 - [x] build your own `awscli` layer from scratch or simply from SAR(Serverless App Repository) with the latest version of `awscli` 
 - [x] ships `jq` that helps you parse the JSON payload
-- [x] ships `make` command [#6](https://github.com/pahud/lambda-layer-awscli/issues/6)
+- [x] ships `make` command
 - [x] easy to build, ship and invoke your lambda function
-- [x] support deployment to China Beijing and Ningxia regions [#8](https://github.com/pahud/lambda-layer-awscli/issues/8)
+- [x] support deployment to China Beijing and Ningxia regions
 
 # Layer structure
 
@@ -101,7 +101,7 @@ $ aws --region us-east-1 serverlessrepo create-cloud-formation-template --applic
 }
 ```
 please note your current IAM identity will need relevant `serverlessrepo` IAM policies. If you encounter `AccessDeniedException` error, you may attach an extra IAM inline policy like this in your current 
-IAM identity.(see [#13](https://github.com/pahud/lambda-layer-awscli/issues/13))
+IAM identity.
 
 ```
 {
@@ -183,9 +183,6 @@ $ make sam-layer-package sam-layer-deploy
 # destroy the layer 
 $ make sam-layer-destroy
 ```
-check [this issue](https://github.com/pahud/lambda-layer-awscli/issues/5) for detials
-
-
 
 
 # create lambda func with your awscli layer
