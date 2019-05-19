@@ -1,0 +1,105 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Parameters:
+  projectName:
+    Type: String
+    Default: demo
+    Description : "Resource prefix"
+    AllowedPattern : "^[a-zA-Z][a-zA-Z0-9]*"
+  publicSubnet1:
+    Type: String
+    Default: subnet-025bf274
+    Description : "public subnet 1"
+  publicSubnet2:
+    Type: String
+    Default: subnet-7034c928
+    Description : "public subnet 2"
+  publicSubnet3:
+    Type: String
+    Default: subnet-8a3e0aa2
+    Description : "public subnet 3"
+  publicAlbSecuritygroup:
+    Type: String
+    Default: sg-7cc1df18
+    
+Transform: AWS::Serverless-2016-10-31
+Description: AWS Lambda with ALB sample
+Resources:
+  SampleFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: main
+      CodeUri: ./func.d
+      Runtime: provided
+      Layers:
+        - arn:aws:lambda:ap-northeast-1:903779448426:layer:awscli-layer:20
+        # - !Sub "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:layer:awscli-layer-bc:6"
+      MemorySize: 512
+      Policies: 
+        - AWSLambdaBasicExecutionRole
+      # Role: !Sub "arn:aws:iam::${AWS::AccountId}:role/LambdaExecGetCE"
+      Timeout: 10
+      # Events:
+      #   GetResource:
+      #     Type: Api
+      #     Properties:
+      #       Path: /demo
+      #       Method: any
+      #       RestApiId: !Ref MyDemoApi
+         
+  vpcLambdaInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !GetAtt SampleFunction.Arn
+      Action: 'lambda:InvokeFunction'
+      Principal: elasticloadbalancing.amazonaws.com
+ 
+ 
+  publicLoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Name: !Sub ${projectName}-lambda-alb
+      Scheme: internet-facing
+      Subnets:
+        - !Ref publicSubnet1
+        - !Ref publicSubnet2
+        - !Ref publicSubnet3
+      SecurityGroups:
+        - !Ref publicAlbSecuritygroup
+      Tags:
+        - Key: Name
+          Value: !Sub ${projectName}-lambda-alb
+          
+  publicLoadBalancerTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Name: !Sub ${projectName}-public-trg
+      Tags:
+         - Key: Name
+           Value: !Sub ${projectName}-public-trg
+      TargetType: lambda
+      Targets:
+      - Id: !GetAtt SampleFunction.Arn
+      HealthCheckEnabled: false
+      
+  publicLoadBalancerListener:
+    Type: "AWS::ElasticLoadBalancingV2::Listener"
+    Properties:
+      DefaultActions:
+        - TargetGroupArn: !Ref publicLoadBalancerTargetGroup
+          Type: forward
+      LoadBalancerArn: !Ref publicLoadBalancer
+      Port: 80
+      Protocol: HTTP    
+      
+
+Outputs:
+  LambdaFuncArn:
+    Description: Lambda Function Arn
+    Value: !GetAtt SampleFunction.Arn
+  AlbDnsName:
+    Description: ALB DNS NAME
+    Value: !GetAtt publicLoadBalancer.DNSName
+  TestURL:
+    Description: Test URL
+    Value: !Sub "http://${publicLoadBalancer.DNSName}/"
+
