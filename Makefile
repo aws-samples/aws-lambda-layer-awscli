@@ -115,7 +115,11 @@ add-layer-version-permission:
 	--statement-id public-all \
 	--action lambda:GetLayerVersion \
 	--principal '*'
-	
+
+publish-layer-to-cn:
+	LAMBDA_REGION=cn-north-1 S3BUCKET=pahud-tmp-cn-north-1 make sam-layer-package sam-layer-deploy || exit 0
+	LAMBDA_REGION=cn-northwest-1 S3BUCKET=pahud-tmp-cn-northwest-1 make sam-layer-package sam-layer-deploy || exit 0
+		
 
 all: build layer-upload layer-publish
 	

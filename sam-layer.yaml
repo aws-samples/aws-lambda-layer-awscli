@@ -14,13 +14,13 @@ Metadata:
     SourceCodeUrl: https://github.com/pahud/lambda-layer-awscli
 
 Transform: AWS::Serverless-2016-10-31
-Description: Create a Layer
+Description: AWS Lambda Layer for awscli
 
 Resources:
   LambdaLayer:
     Type: AWS::Serverless::LayerVersion
     Properties:
-      LayerName: !Sub "layer-${AWS::StackName}"
+      LayerName: !Sub "${AWS::StackName}"
       ContentUri: ./layer.zip
       CompatibleRuntimes: 
         - provided
