@@ -1,8 +1,17 @@
+SECRETS_FILE ?= secrets.mk
+ifeq ($(shell test -e $(SECRETS_FILE) && echo -n yes),yes)
+    include $(SECRETS_FILE)
+endif
+CUSTOM_FILE ?= custom.mk
+ifeq ($(shell test -e $(CUSTOM_FILE) && echo -n yes),yes)
+    include $(CUSTOM_FILE)
+endif
+ROOT ?= $(shell pwd)
+
 S3BUCKET ?= pahud-tmp-ap-northeast-1
 LAMBDA_REGION ?= ap-northeast-1
 LAMBDA_FUNC_NAME ?= lambda-alb-sample
 LAMBDA_FUNC_DESC ?= 'aws lambda alb sample'
-# LAMBDA_ROLE_ARN ?= arn:aws:iam::903779448426:role/LambdaExecGetCE
 
 build:
 	@bash build.sh
@@ -66,8 +75,8 @@ sam-package:
 	-v $(HOME)/.aws:/home/samcli/.aws \
 	-w /home/samcli/workdir \
 	-e AWS_DEFAULT_REGION=$(LAMBDA_REGION) \
+	-e AWS_PROFILE=$(AWS_PROFILE) \
 	pahud/aws-sam-cli:latest sam package --template-file sam.yaml --s3-bucket $(S3BUCKET) --output-template-file packaged.yaml
-
 
 sam-deploy:
 	@docker run -ti \
@@ -75,6 +84,7 @@ sam-deploy:
 	-v $(HOME)/.aws:/home/samcli/.aws \
 	-w /home/samcli/workdir \
 	-e AWS_DEFAULT_REGION=$(LAMBDA_REGION) \
+	-e AWS_PROFILE=$(AWS_PROFILE) \
 	pahud/aws-sam-cli:latest sam deploy --template-file ./packaged.yaml --stack-name "$(LAMBDA_FUNC_NAME)-stack" --capabilities CAPABILITY_IAM
 	# print the cloudformation stack outputs
 	aws --region $(LAMBDA_REGION) cloudformation describe-stacks --stack-name "$(LAMBDA_FUNC_NAME)-stack" --query 'Stacks[0].Outputs'
