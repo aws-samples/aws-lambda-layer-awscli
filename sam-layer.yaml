@@ -9,9 +9,9 @@ Metadata:
     LicenseUrl: LICENSE
     ReadmeUrl: README.md
     Labels: ['layer','lambda','awscli','cli', 'aws', 'bash']
-    HomePageUrl: https://github.com/pahud/lambda-layer-awscli
+    HomePageUrl: https://github.com/aws-samples/aws-lambda-layer-awscli
     SemanticVersion: 1.0.0
-    SourceCodeUrl: https://github.com/pahud/lambda-layer-awscli
+    SourceCodeUrl: https://github.com/aws-samples/aws-lambda-layer-awscli
 
 Transform: AWS::Serverless-2016-10-31
 Description: AWS Lambda Layer for awscli

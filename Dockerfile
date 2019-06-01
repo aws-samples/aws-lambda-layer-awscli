@@ -39,6 +39,9 @@ RUN rm -rf /opt/awscli/pip* /opt/awscli/setuptools* /opt/awscli/awscli/examples
 
 #&& mv /opt/awscli/site-packages/* /opt/awscli/
 
+# get the version number
+RUN grep "__version__" /opt/awscli/awscli/__init__.py | egrep -o "1.[0-9.]+" > /AWSCLI_VERSION
+
 # zip up
 RUN cd /opt; zip -r ../layer.zip *; \
 echo "/layer.zip is ready"; \

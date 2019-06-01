@@ -10,6 +10,11 @@ LAMBDA_ROLE_ARN ?= arn:aws:iam::$(AWS_ACCOUNT_ID):role/service-role/LambdaDefaul
 AWS_PROFILE ?= default
 PAYLOAD ?= {"foo":"bar"}
 
+ifeq ($(shell test -e AWSCLI_VERSION && echo -n yes),yes)
+    SemanticVersion = $(shell cat AWSCLI_VERSION)
+endif
+
+
 .PHONY: build layer-build layer-zip layer-upload layer-publish sam-layer-package sam-layer-deploy sam-layer-destroy func-zip create-func update-func func-all layer-all invoke add-layer-version-permission all clean clean-all delete-func 
 
 build: layer-build
@@ -39,7 +44,6 @@ sam-layer-package:
 	-v $(HOME)/.aws:/home/samcli/.aws \
 	-w /home/samcli/workdir \
 	-e AWS_DEFAULT_REGION=$(LAMBDA_REGION) \
-	-e AWS_PROFILE=$(AWS_PROFILE) \
 	pahud/aws-sam-cli:latest sam package --template-file sam-layer.yaml --s3-bucket $(S3BUCKET) --output-template-file sam-layer-packaged.yaml
 	@echo "[OK] Now type 'make sam-layer-deploy' to deploy your Lambda layer with SAM"
 	
@@ -50,8 +54,8 @@ sam-layer-publish:
 	-v $(HOME)/.aws:/home/samcli/.aws \
 	-w /home/samcli/workdir \
 	-e AWS_DEFAULT_REGION=$(LAMBDA_REGION) \
-	-e AWS_PROFILE=$(AWS_PROFILE) \
-	pahud/aws-sam-cli:latest sam publish --region $(LAMBDA_REGION) --template sam-layer-packaged.yaml
+	pahud/aws-sam-cli:latest sam publish --region $(LAMBDA_REGION) --template sam-layer-packaged.yaml \
+	--semantic-version $(SemanticVersion)
 
 sam-layer-deploy:
 	@docker run -ti \
@@ -59,7 +63,6 @@ sam-layer-deploy:
 	-v $(HOME)/.aws:/home/samcli/.aws \
 	-w /home/samcli/workdir \
 	-e AWS_DEFAULT_REGION=$(LAMBDA_REGION) \
-	-e AWS_PROFILE=$(AWS_PROFILE) \
 	pahud/aws-sam-cli:latest sam deploy --template-file ./sam-layer-packaged.yaml --stack-name "$(LAYER_NAME)-stack"
 	# print the cloudformation stack outputs
 	aws --region $(LAMBDA_REGION) cloudformation describe-stacks --stack-name "$(LAYER_NAME)-stack" --query 'Stacks[0].Outputs'
@@ -115,11 +118,7 @@ add-layer-version-permission:
 	--statement-id public-all \
 	--action lambda:GetLayerVersion \
 	--principal '*'
-
-publish-layer-to-cn:
-	LAMBDA_REGION=cn-north-1 S3BUCKET=pahud-tmp-cn-north-1 make sam-layer-package sam-layer-deploy || exit 0
-	LAMBDA_REGION=cn-northwest-1 S3BUCKET=pahud-tmp-cn-northwest-1 make sam-layer-package sam-layer-deploy || exit 0
-		
+	
 
 all: build layer-upload layer-publish
 	
