@@ -60,7 +60,8 @@ sam-layer-publish:
 	-w /home/samcli/workdir \
 	-e AWS_DEFAULT_REGION=$(LAMBDA_REGION) \
 	pahud/aws-sam-cli:latest sam publish --region $(LAMBDA_REGION) --template sam-layer-packaged.yaml \
-	--semantic-version $(SemanticVersion)
+	--semantic-version $(shell cat AWSCLI_VERSION)
+	@echo "=> version $(shell cat AWSCLI_VERSION) published to $(LAMBDA_REGION)"
 
 sam-layer-deploy:
 	@docker run -i \
@@ -132,7 +133,7 @@ publish-new-version-to-sar:
 all: build layer-upload layer-publish
 	
 clean:
-	rm -rf awscli-bundle* layer layer.zip func-bundle.zip lambda.output
+	rm -rf awscli-bundle* layer layer.zip func-bundle.zip lambda.output AWSCLI_VERSION 
 	
 
 delete-func:
