@@ -39,7 +39,7 @@ layer-publish:
 	--compatible-runtimes provided
 
 sam-layer-package:
-	@docker run -ti \
+	@docker run -i \
 	-v $(PWD):/home/samcli/workdir \
 	-v $(HOME)/.aws:/home/samcli/.aws \
 	-w /home/samcli/workdir \
@@ -49,7 +49,7 @@ sam-layer-package:
 	
 .PHONY: sam-layer-publish
 sam-layer-publish:
-	@docker run -ti \
+	@docker run -i \
 	-v $(PWD):/home/samcli/workdir \
 	-v $(HOME)/.aws:/home/samcli/.aws \
 	-w /home/samcli/workdir \
@@ -58,7 +58,7 @@ sam-layer-publish:
 	--semantic-version $(SemanticVersion)
 
 sam-layer-deploy:
-	@docker run -ti \
+	@docker run -i \
 	-v $(PWD):/home/samcli/workdir \
 	-v $(HOME)/.aws:/home/samcli/.aws \
 	-w /home/samcli/workdir \
