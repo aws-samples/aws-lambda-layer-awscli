@@ -14,6 +14,10 @@ ifeq ($(shell test -e AWSCLI_VERSION && echo -n yes),yes)
     SemanticVersion = $(shell cat AWSCLI_VERSION)
 endif
 
+ifeq ($(shell test -e envfile && echo -n yes),yes)
+	EXTRA_DOCKER_ARGS = '--env-file envfile'
+endif
+
 
 .PHONY: build layer-build layer-zip layer-upload layer-publish sam-layer-package sam-layer-deploy sam-layer-destroy func-zip create-func update-func func-all layer-all invoke add-layer-version-permission all clean clean-all delete-func 
 
@@ -39,13 +43,7 @@ layer-publish:
 	--compatible-runtimes provided
 
 sam-layer-package:
-ifeq ($(shell test -e envfile && echo -n yes),yes)
-	EXTRA_ARGS = '--env-file envfile'
-else
-	EXTRA_ARGS = ''
-endif
-	@echo $(EXTRA_ARGS)
-	@docker run -i $(EXTRA_ARGS) \
+	@docker run -i $(EXTRA_DOCKER_ARGS) \
 	-v $(PWD):/home/samcli/workdir \
 	-v $(HOME)/.aws:/home/samcli/.aws \
 	-w /home/samcli/workdir \
@@ -54,14 +52,8 @@ endif
 	@echo "[OK] Now type 'make sam-layer-deploy' to deploy your Lambda layer with SAM"
 
 
-
 .PHONY: sam-layer-publish
 sam-layer-publish:
-ifeq ($(shell test -e envfile && echo -n yes),yes)
-	EXTRA_ARGS='--env-file envfile'
-else
-	EXTRA_ARGS=''
-endif
 	@docker run -i $(EXTRA_ARGS) \
 	-v $(PWD):/home/samcli/workdir \
 	-v $(HOME)/.aws:/home/samcli/.aws \
