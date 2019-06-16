@@ -2,7 +2,6 @@ version: 0.2
 
 env:
   variables:
-    FOO: "bar"
     AWS_DEFAULT_REGION: "ap-northeast-1"
     AWS_REGION: "ap-northeast-1"
 phases:
