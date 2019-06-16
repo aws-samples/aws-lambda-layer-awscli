@@ -119,6 +119,10 @@ add-layer-version-permission:
 	--action lambda:GetLayerVersion \
 	--principal '*'
 	
+	
+.PHONY: publish-new-version-to-sar
+publish-new-version-to-sar:
+	@LAMBDA_REGION=us-east-1 make clean build sam-layer-package sam-layer-publish
 
 all: build layer-upload layer-publish
 	
