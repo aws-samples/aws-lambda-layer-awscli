@@ -15,7 +15,7 @@ ifeq ($(shell test -e AWSCLI_VERSION && echo -n yes),yes)
 endif
 
 ifeq ($(shell test -e envfile && echo -n yes),yes)
-	EXTRA_DOCKER_ARGS = '--env-file envfile'
+	EXTRA_DOCKER_ARGS = --env-file envfile
 endif
 
 
@@ -54,7 +54,7 @@ sam-layer-package:
 
 .PHONY: sam-layer-publish
 sam-layer-publish:
-	@docker run -i $(EXTRA_ARGS) \
+	@docker run -i $(EXTRA_DOCKER_ARGS) \
 	-v $(PWD):/home/samcli/workdir \
 	-v $(HOME)/.aws:/home/samcli/.aws \
 	-w /home/samcli/workdir \
