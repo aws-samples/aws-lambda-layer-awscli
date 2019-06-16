@@ -40,10 +40,11 @@ layer-publish:
 
 sam-layer-package:
 ifeq ($(shell test -e envfile && echo -n yes),yes)
-	EXTRA_ARGS='--env-file envfile'
+	EXTRA_ARGS = '--env-file envfile'
 else
-	EXTRA_ARGS=''
+	EXTRA_ARGS = ''
 endif
+	@echo $(EXTRA_ARGS)
 	@docker run -i $(EXTRA_ARGS) \
 	-v $(PWD):/home/samcli/workdir \
 	-v $(HOME)/.aws:/home/samcli/.aws \
