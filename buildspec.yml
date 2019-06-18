@@ -18,3 +18,7 @@ phases:
   build:
     commands:
         - make publish-new-version-to-sar
+   post_build:
+    commands:
+       - BUILT_VERSION=$(cat AWSCLI_VERSION) 
+       - aws --region ap-northeast-1 sns publish --topic-arn $SNS_TOPIC_ARN --message "[OK] aws-samples/aws-lambda-layer-awscli version ${BUILT_VERSION} published to SAR us-east-1"
