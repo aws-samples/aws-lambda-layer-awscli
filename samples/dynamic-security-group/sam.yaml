@@ -10,18 +10,21 @@ Metadata:
     ReadmeUrl: README.md
     Labels: ['security','ip','range','securitygroup','ec2-instance-connect']
     HomePageUrl: https://github.com/aws-samples/aws-lambda-layer-awscli/tree/master/samples/dynamic-security-group
-    SemanticVersion: 1.0.0-build7
+    SemanticVersion: 1.0.0-build8
     SourceCodeUrl: https://github.com/aws-samples/aws-lambda-layer-awscli/tree/master/samples/dynamic-security-group
     
 Parameters:
   FunctionName:
     Type: String
     Default: SecurityGroupBuilder
+    Description: OPTIONAL - Lambda function name
   LambdaRoleArn:
     Type: String
+    Description: OPTIONAL - provide your own Lambda role ARN otherwise I will generate a role for you
     Default: default
   VpcId:
     Type: String
+    Description: VPC ID for this security group
   SG:
     Type: String
     Description: Security Group ID

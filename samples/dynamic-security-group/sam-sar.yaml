@@ -39,8 +39,8 @@ Resources:
     Type: AWS::Serverless::Application
     Properties:
       Location:
-        ApplicationId: arn:aws:serverlessrepo:ap-northeast-1:903779448426:applications/dynamic-security-group-builder
-        SemanticVersion: 1.0.0-build7
+        ApplicationId: arn:aws:serverlessrepo:us-east-1:903779448426:applications/dynamic-security-group-builder
+        SemanticVersion: 1.0.0-build8
       Parameters:
         SG: !Ref SG
         VpcId: !Ref VpcId
