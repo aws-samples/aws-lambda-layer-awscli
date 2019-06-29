@@ -1,0 +1,65 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+# Metadata:
+#   AWS::ServerlessRepo::Application:
+#     Name: dynamic-security-group-builder
+#     Description: "This Serverless App builds security group for you with latest IP ranges from https://ip-ranges.amazonaws.com/ip-ranges.json"
+#     Author: Pahud Hsieh
+#     SpdxLicenseId: Apache-2.0
+#     LicenseUrl: LICENSE
+#     ReadmeUrl: README.md
+#     Labels: ['security','ip','range','securitygroup','ec2-instance-connect']
+#     HomePageUrl: https://github.com/aws-samples/aws-lambda-layer-awscli/tree/master/samples/dynamic-security-group
+#     SemanticVersion: 1.0.0-build5
+#     SourceCodeUrl: https://github.com/aws-samples/aws-lambda-layer-awscli/tree/master/samples/dynamic-security-group
+    
+Parameters:
+  FunctionName:
+    Type: String
+    Default: defaultFunc
+  LambdaRoleArn:
+    Type: String
+  VpcId:
+    Type: String
+    Description: VPC ID
+    
+Transform: AWS::Serverless-2016-10-31
+Description: Dynamic Security Group Generator
+Resources:
+  AwsCliLayer:
+    Type: AWS::Serverless::Application
+    Properties:
+      Location:
+        ApplicationId: arn:aws:serverlessrepo:us-east-1:903779448426:applications/lambda-layer-awscli
+        SemanticVersion: 1.16.189
+
+      
+
+  Builder:
+    Type: AWS::Serverless::Application
+    Properties:
+      Location:
+        ApplicationId: arn:aws:serverlessrepo:ap-northeast-1:903779448426:applications/dynamic-security-group-builder
+        SemanticVersion: 1.0.0-build7
+      Parameters:
+        SG: !Ref SG
+        VpcId: !Ref VpcId
+        IpRangeServiceName: EC2_INSTANCE_CONNECT
+      
+  SG:
+    Type: AWS::EC2::SecurityGroup
+    Properties: 
+      GroupDescription: "Security Group for EC2_INSTANCE_CONNECT"
+      GroupName: !Sub "EC2_INSTANCE_CONNECT-${AWS::StackName}"
+      VpcId: !Ref VpcId
+      Tags:
+        -
+          Key: Name
+          Value: EC2_INSTANCE_CONNECT
+          
+Outputs:
+    Result:
+      Value: !GetAtt Builder.Outputs.Result
+    GroupId:
+      Value: !GetAtt Builder.Outputs.GroupId
+

@@ -1,0 +1,124 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Metadata:
+  AWS::ServerlessRepo::Application:
+    Name: dynamic-security-group-builder
+    Description: "This Serverless App builds security group for you with latest IP ranges from https://ip-ranges.amazonaws.com/ip-ranges.json"
+    Author: Pahud Hsieh
+    SpdxLicenseId: Apache-2.0
+    LicenseUrl: LICENSE
+    ReadmeUrl: README.md
+    Labels: ['security','ip','range','securitygroup','ec2-instance-connect']
+    HomePageUrl: https://github.com/aws-samples/aws-lambda-layer-awscli/tree/master/samples/dynamic-security-group
+    SemanticVersion: 1.0.0-build7
+    SourceCodeUrl: https://github.com/aws-samples/aws-lambda-layer-awscli/tree/master/samples/dynamic-security-group
+    
+Parameters:
+  FunctionName:
+    Type: String
+    Default: SecurityGroupBuilder
+  LambdaRoleArn:
+    Type: String
+    Default: default
+  VpcId:
+    Type: String
+  SG:
+    Type: String
+    Description: Security Group ID
+  IpRangeServiceName:
+    Type: String
+    Description: service name to filter from https://ip-ranges.amazonaws.com/ip-ranges.json
+    Default: EC2_INSTANCE_CONNECT
+    
+Conditions:
+  UseDefaultLambdaRoleArn: !Equals [ !Ref LambdaRoleArn, default ]
+    
+Transform: AWS::Serverless-2016-10-31
+Description: Dynamic Security Group Generator
+Resources:
+  AwsCliLayer:
+    Type: AWS::Serverless::Application
+    Properties:
+      Location:
+        ApplicationId: arn:aws:serverlessrepo:us-east-1:903779448426:applications/lambda-layer-awscli
+        SemanticVersion: 1.16.189
+
+  Func:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub "${FunctionName}-${VpcId}"
+      Handler: main
+      CodeUri: ./func.d
+      Runtime: provided
+      Layers:
+        - !GetAtt AwsCliLayer.Outputs.LayerVersionArn
+      MemorySize: 1024
+      Environment:
+        Variables:
+            REGION: !Sub "${AWS::Region}"
+            GROUP_ID: !Ref SG
+            SERVICE_NAME: !Ref IpRangeServiceName
+      Role: 
+        !If
+          - UseDefaultLambdaRoleArn
+          - !GetAtt MyLambdaRole.Arn
+          - !Ref LambdaRoleArn
+      Timeout: 300
+      Events:
+        CheckSecurityGroupScheduledEvent:
+          Type: Schedule
+          Properties:
+            Schedule: rate(1 day)
+
+  MyLambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - lambda.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      ManagedPolicyArns:
+      - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Path: /
+      Policies:
+      - PolicyName: Root
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - ec2:AuthorizeSecurityGroupIngress
+            - ec2:RevokeSecurityGroupIngress
+            - ec2:DescribeSecurityGroups
+            Resource: '*'
+      RoleName:
+        Fn::Sub: ${AWS::StackName}-FuncRole
+
+  SGInfo:
+    Type: Custom::DymanicSecurityGroup
+    Properties:
+      ServiceToken: !GetAtt Func.Arn
+      GroupId: !Ref SG
+      
+  # SG:
+  #   Type: AWS::EC2::SecurityGroup
+  #   Properties: 
+  #     GroupDescription: "Security Group for EC2_INSTANCE_CONNECT"
+  #     GroupName: !Sub "EC2_INSTANCE_CONNECT-${AWS::StackName}"
+  #     VpcId: !Ref VpcId
+  #     Tags:
+  #       -
+  #         Key: Name
+  #         Value: EC2_INSTANCE_CONNECT
+          
+Outputs:
+    Result:
+      Value: !GetAtt SGInfo.Result
+    GroupId:
+      Value: !Ref SG
+
