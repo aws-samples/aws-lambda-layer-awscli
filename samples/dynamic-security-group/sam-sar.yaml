@@ -1,17 +1,4 @@
 AWSTemplateFormatVersion: '2010-09-09'
-
-# Metadata:
-#   AWS::ServerlessRepo::Application:
-#     Name: dynamic-security-group-builder
-#     Description: "This Serverless App builds security group for you with latest IP ranges from https://ip-ranges.amazonaws.com/ip-ranges.json"
-#     Author: Pahud Hsieh
-#     SpdxLicenseId: Apache-2.0
-#     LicenseUrl: LICENSE
-#     ReadmeUrl: README.md
-#     Labels: ['security','ip','range','securitygroup','ec2-instance-connect']
-#     HomePageUrl: https://github.com/aws-samples/aws-lambda-layer-awscli/tree/master/samples/dynamic-security-group
-#     SemanticVersion: 1.0.0-build5
-#     SourceCodeUrl: https://github.com/aws-samples/aws-lambda-layer-awscli/tree/master/samples/dynamic-security-group
     
 Parameters:
   FunctionName:
@@ -32,8 +19,6 @@ Resources:
       Location:
         ApplicationId: arn:aws:serverlessrepo:us-east-1:903779448426:applications/lambda-layer-awscli
         SemanticVersion: 1.16.189
-
-      
 
   Builder:
     Type: AWS::Serverless::Application

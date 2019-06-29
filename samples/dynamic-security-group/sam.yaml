@@ -107,17 +107,6 @@ Resources:
     Properties:
       ServiceToken: !GetAtt Func.Arn
       GroupId: !Ref SG
-      
-  # SG:
-  #   Type: AWS::EC2::SecurityGroup
-  #   Properties: 
-  #     GroupDescription: "Security Group for EC2_INSTANCE_CONNECT"
-  #     GroupName: !Sub "EC2_INSTANCE_CONNECT-${AWS::StackName}"
-  #     VpcId: !Ref VpcId
-  #     Tags:
-  #       -
-  #         Key: Name
-  #         Value: EC2_INSTANCE_CONNECT
           
 Outputs:
     Result:
