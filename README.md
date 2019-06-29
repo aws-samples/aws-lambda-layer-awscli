@@ -1,6 +1,6 @@
 ![](https://travis-ci.org/aws-samples/aws-lambda-layer-awscli.svg?branch=master)
-![](https://codebuild.us-west-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiTmdEamFTUURGWEZHUTdhWHlnSEtrWWZjNUMxOS9iWTgxUUozMkI5MVl1V0FsdlRQZGVrVnhEZFZodGRqZ3ZJbnVsKzBveEdPOFF0aUthUGNTTWVkSnJVPSIsIml2UGFyYW1ldGVyU3BlYyI6InVVeGg5cnJNandDNlN4MjYiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
 [![](https://img.shields.io/badge/Available-serverless%20app%20repository-blue.svg)](https://serverlessrepo.aws.amazon.com/#/applications/arn:aws:serverlessrepo:us-east-1:903779448426:applications~lambda-layer-awscli)
+![](https://codebuild.ap-northeast-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiMnZzMmFZZ1U2OTk1WmxZWUJWVW9QaWJxR3Zxd09PU2hoYmJCUlh4eWpLLzJlNUUrNFhVZnEvbGhxa0N0ZlAvN0FVRHE0amsrK3U2ZEFxblVFZ2o4akZRPSIsIml2UGFyYW1ldGVyU3BlYyI6Im5CblF1UFJyWkhha2x3cHMiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
 
 # lambda-layer-awscli
 
