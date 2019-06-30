@@ -2,12 +2,22 @@
 
 #  dynamic-security-group-builder
 
-This Serverless App builds or updates a security group with `EC2_INSTANCE_CONNECT` IP ranges from https://ip-ranges.amazonaws.com/ip-ranges.json 
+**dynamic-security-group-builder** is a Serverless App that manages a security group for you with IP CIDR ranges from a specific service in this URL
 
-# click and deploy
+**https://ip-ranges.amazonaws.com/ip-ranges.json** 
 
-|        Region        |                    Click and Deploy                     | 
-| :----------------: | :----------------------------------------------------------: | 
+
+
+# Architecture
+
+![](images/dynamic-security-group-builder.png)
+
+# Click and Deploy
+
+By clicking the following button, SAR will create this stack for you on your region. You must provide an existing **Security Group ID** and **VPC ID** before SAR can deploy this stack for you to maintain the Security Group you provided on receiving SNS topics.
+
+|        Region        |                    Click and Deploy                     |
+| :----------------: | :----------------------------------------------------------: |
 |  **ap-northeast-1**  |[![](https://img.shields.io/badge/SAR-Deploy%20Now-yellow.svg)](https://deploy.serverlessrepo.app/ap-northeast-1/?app=arn:aws:serverlessrepo:us-east-1:903779448426:applications/dynamic-security-group-builder)|
 |  **ap-northeast-2**  |[![](https://img.shields.io/badge/SAR-Deploy%20Now-yellow.svg)](https://deploy.serverlessrepo.app/ap-northeast-2/?app=arn:aws:serverlessrepo:us-east-1:903779448426:applications/dynamic-security-group-builder)|
 |  **ap-northeast-3**  |[![](https://img.shields.io/badge/SAR-Deploy%20Now-yellow.svg)](https://deploy.serverlessrepo.app/ap-northeast-3/?app=arn:aws:serverlessrepo:us-east-1:903779448426:applications/dynamic-security-group-builder)|
