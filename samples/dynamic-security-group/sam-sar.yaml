@@ -25,7 +25,7 @@ Resources:
     Properties:
       Location:
         ApplicationId: arn:aws:serverlessrepo:us-east-1:903779448426:applications/dynamic-security-group-builder
-        SemanticVersion: 1.0.0-build8
+        SemanticVersion: 1.0.1
       Parameters:
         SG: !Ref SG
         VpcId: !Ref VpcId
