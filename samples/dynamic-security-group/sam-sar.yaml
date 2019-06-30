@@ -42,6 +42,25 @@ Resources:
           Key: Name
           Value: EC2_INSTANCE_CONNECT
           
+  SNSSubscription: 
+    Type: AWS::SNS::Subscription
+    Properties: 
+      # DeliveryPolicy: Json
+      Endpoint: !GetAtt Builder.Outputs.LambdaFuncArn
+      # FilterPolicy: Json
+      Protocol: lambda
+      # RawMessageDelivery: 'false'
+      Region: us-east-1
+      TopicArn: arn:aws:sns:us-east-1:806199016981:AmazonIpSpaceChanged
+  
+  FuncSNSSubscriptionPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:invokeFunction
+      Principal: sns.amazonaws.com
+      FunctionName: !GetAtt Builder.Outputs.LambdaFuncArn
+      SourceArn: arn:aws:sns:us-east-1:806199016981:AmazonIpSpaceChanged
+          
 Outputs:
     Result:
       Value: !GetAtt Builder.Outputs.Result

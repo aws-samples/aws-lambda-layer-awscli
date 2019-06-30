@@ -10,7 +10,7 @@ Metadata:
     ReadmeUrl: README.md
     Labels: ['security','ip','range','securitygroup','ec2-instance-connect']
     HomePageUrl: https://github.com/aws-samples/aws-lambda-layer-awscli/tree/master/samples/dynamic-security-group
-    SemanticVersion: 1.0.0-build8
+    SemanticVersion: 1.0.1
     SourceCodeUrl: https://github.com/aws-samples/aws-lambda-layer-awscli/tree/master/samples/dynamic-security-group
     
 Parameters:
@@ -68,10 +68,25 @@ Resources:
           - !Ref LambdaRoleArn
       Timeout: 300
       Events:
-        CheckSecurityGroupScheduledEvent:
-          Type: Schedule
+        SNSSubscription:
+          Type: SNS
           Properties:
-            Schedule: rate(1 day)
+            #Topic: !Sub "arn:aws:sns:${AWS::Region}:${AWS::AccountId}:AWS_IP_RANGE_UPDATE"
+            Topic: !Ref MySNSTopic
+      #       # Endpoint: !GetAtt Func.Arn
+      #       # Protocol: lambda
+      #       # Region: us-east-1
+      #       Topic: arn:aws:sns:us-east-1:806199016981:AmazonIpSpaceChanged
+        # CheckSecurityGroupScheduledEvent:
+        #   Type: Schedule
+        #   Properties:
+        #     Schedule: rate(1 day)
+        
+        
+  MySNSTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: "AWS_IP_RANGE_UPDATE"
 
   MyLambdaRole:
     Type: AWS::IAM::Role
@@ -113,4 +128,6 @@ Outputs:
       Value: !GetAtt SGInfo.Result
     GroupId:
       Value: !Ref SG
+    LambdaFuncArn:
+      Value: !GetAtt Func.Arn
 
