@@ -88,7 +88,7 @@ func-zip:
 	rm -rf ./lambda-bundle; mkdir ./lambda-bundle
 	chmod +x main.sh
 	cp main.sh bootstrap ./lambda-bundle;
-	cp Makefile.lambda ./lambda-bundle/Makefile;
+	cp Makefile ./lambda-bundle/Makefile;
 	cd ./lambda-bundle && \
 	zip -r ../func-bundle.zip *; ls -alh ../func-bundle.zip
 	
