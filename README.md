@@ -67,32 +67,24 @@ Layer will be installed into `/opt/awscli` in your lambda sandbox with the struc
 
 # create your own awscli layer
 
-You have 3 options to create and deploy your awscli lambda layer. 
-
-Before that, you must edit the `Makefile` fist.
-
-| Name                 | Description                                                  | required to update |
-| -------------------- | ------------------------------------------------------------ | ------------------ |
-| **LAYER_NAME**       | Layer Name                                                   |                    |
-| **LAYER_DESC**       | Layer Description                                            |                    |
-| **INPUT_JSON**       | input json payload file for lambda invocation                |                    |
-| **S3BUCKET**         | Your S3 bucket to store the intermediate Lambda bundle zip.<br />Make sure the S3 bucket in the same region with your Lambda function to deploy. | YES                |
-| **LAMBDA_REGION**    | The region code to deploy your Lambda function               | Optional           |
-| **LAMBDA_FUNC_NAME** | Lambda function name                                         |                    |
-| **LAMBDA_ROLE_ARN**  | Lambda IAM role ARN                                          | Optional(for function only)            |
+You have many options to create and deploy your awscli lambda layer. 
 
 
 
-# OPTION #1 create from SAR(Serverless Application Repository)
+## OPTION #1 Deploy with AWS CDK from SAR(Serverless Application Repository)
 
-This is the recommended approach. We deploy the awscli lambda layer straight from `SAR(Serverless App Repository)`
+Check the [aws-version sample](samples/aws-version).
+
+
+
+## OPTION #2 Deploy from SAR from console or CLI
 
 You may deploy from the SAR console or from the CLI.
 
 ### Deploy from SAR console
 
-|        Region        |                    Click and Deploy                     | 
-| :----------------: | :----------------------------------------------------------: | 
+|        Region        |                    Click and Deploy                     |
+| :----------------: | :----------------------------------------------------------: |
 |  **ap-northeast-1**  |[![](https://img.shields.io/badge/SAR-Deploy%20Now-yellow.svg)](https://deploy.serverlessrepo.app/ap-northeast-1/?app=arn:aws:serverlessrepo:us-east-1:903779448426:applications/lambda-layer-awscli)|
 |  **ap-northeast-2**  |[![](https://img.shields.io/badge/SAR-Deploy%20Now-yellow.svg)](https://deploy.serverlessrepo.app/ap-northeast-2/?app=arn:aws:serverlessrepo:us-east-1:903779448426:applications/lambda-layer-awscli)|
 |  **ap-northeast-3**  |[![](https://img.shields.io/badge/SAR-Deploy%20Now-yellow.svg)](https://deploy.serverlessrepo.app/ap-northeast-3/?app=arn:aws:serverlessrepo:us-east-1:903779448426:applications/lambda-layer-awscli)|
@@ -167,9 +159,22 @@ $ aws --region us-east-1 cloudformation describe-stacks --stack-name {StackName}
 Now you got your own Lambda Layer Arn.
 
 
-# OPTION #2 create Layer from scratch
 
-You may also create your own awscli layer from scratch followed by the deployment.
+## OPTION #3 create Layer from scratch
+
+You may also create your own awscli layer from scratch.
+
+Before that, you must edit the `Makefile` fist.
+
+| Name                 | Description                                                  | required to update          |
+| -------------------- | ------------------------------------------------------------ | --------------------------- |
+| **LAYER_NAME**       | Layer Name                                                   |                             |
+| **LAYER_DESC**       | Layer Description                                            |                             |
+| **INPUT_JSON**       | input json payload file for lambda invocation                |                             |
+| **S3BUCKET**         | Your S3 bucket to store the intermediate Lambda bundle zip.<br />Make sure the S3 bucket in the same region with your Lambda function to deploy. | YES                         |
+| **LAMBDA_REGION**    | The region code to deploy your Lambda function               | Optional                    |
+| **LAMBDA_FUNC_NAME** | Lambda function name                                         |                             |
+| **LAMBDA_ROLE_ARN**  | Lambda IAM role ARN                                          | Optional(for function only) |
 
 ```
 $ make build layer-zip layer-upload layer-publish
@@ -195,7 +200,9 @@ response:
     "LicenseInfo": "MIT"
 }
 ```
-# OPTION #3 create Layer with SAM CLI
+
+
+## OPTION #4 create Layer with SAM CLI
 
 Or alternatively, create your Layer with SAM CLI as below:
 
@@ -211,7 +218,7 @@ $ make sam-layer-destroy
 ```
 
 
-# create lambda func with your awscli layer
+### create lambda func with your awscli layer
 
 OK. Now you have your own awscli layer deployed and you got the layer ARN. 
 Create your function with this layer as below:
@@ -224,11 +231,7 @@ $ LAMBDA_LAYERS=LAMBDA_LAYER_VERSION_ARN make create-func
 
 You may also create your lambda function and API Gateway along with other resoruces with `SAM`, check the sample `sam.yaml` and `Makefile` in [this folder](./samples/launch-ec2-instance/).
 
-
-
-
-
-# invoke function
+### invoke function
 
 this will execute `main.sh` in the lambda function zip bundle. Check the [sample](./main.sh).
 
@@ -250,6 +253,8 @@ aws-cli/1.16.85 Python/2.7.12 Linux/4.14.88-72.73.amzn1.x86_64 botocore/1.12.75
 END RequestId: 3a3f0718-13b8-11e9-9d26-8f14b26be384
 REPORT RequestId: 3a3f0718-13b8-11e9-9d26-8f14b26be384  Duration: 1059.15 ms    Billed Duration: 1100 ms        Memory Size: 512 MBMax Memory Used: 69 MB
 ```
+
+
 
 # local testing
 
