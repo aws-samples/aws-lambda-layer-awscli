@@ -7,6 +7,11 @@ CLUSTER_NAME ?= default
 VPCID ?= vpc-e549a281
 
 
+.PHONY: prep
+prep:
+	chmod +x main.sh bootstrap
+	( rm -rf ./func.d; mkdir ./func.d; cp main.sh bootstrap ./func.d)
+
 .PHONY: build 
 build: layer-build
 
