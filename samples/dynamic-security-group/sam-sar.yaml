@@ -18,7 +18,9 @@ Resources:
     Properties:
       Location:
         ApplicationId: arn:aws:serverlessrepo:us-east-1:903779448426:applications/lambda-layer-awscli
-        SemanticVersion: 1.16.189
+        # You should get the latest SemanticVersion with the following aws-cli:
+        # aws serverlessrepo get-application --application-id arn:aws:serverlessrepo:us-east-1:903779448426:applications/lambda-layer-awscli --query 'Version.SemanticVersion' --output text
+        SemanticVersion: 1.16.214
 
   Builder:
     Type: AWS::Serverless::Application

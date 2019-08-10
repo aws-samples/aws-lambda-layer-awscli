@@ -2,6 +2,15 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: "Siri creates Amazon EKS cluster"
 Resources:
+  lambdalayerawscli:
+    Type: AWS::Serverless::Application
+    Properties:
+      Location:
+        ApplicationId: arn:aws:serverlessrepo:us-east-1:903779448426:applications/lambda-layer-awscli
+        # You should get the latest SemanticVersion with the following aws-cli:
+        # aws serverlessrepo get-application --application-id arn:aws:serverlessrepo:us-east-1:903779448426:applications/lambda-layer-awscli --query 'Version.SemanticVersion' --output text
+        SemanticVersion: 1.16.214
+
   SampleFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -12,7 +21,7 @@ Resources:
         Variables:
           AWS_ACCOUNT_ID: !Sub "${AWS::AccountId}"
       Layers:
-        - !Sub "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:layer:awscli-layer:20"
+        - !GetAtt lambdalayerawscli.Outputs.LayerVersionArn
       MemorySize: 512
       # Policies: 
       #   - AWSLambdaBasicExecutionRole

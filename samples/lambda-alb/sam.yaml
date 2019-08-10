@@ -24,6 +24,15 @@ Parameters:
 Transform: AWS::Serverless-2016-10-31
 Description: AWS Lambda with ALB sample
 Resources:
+  lambdalayerawscli:
+    Type: AWS::Serverless::Application
+    Properties:
+      Location:
+        ApplicationId: arn:aws:serverlessrepo:us-east-1:903779448426:applications/lambda-layer-awscli
+        # You should get the latest SemanticVersion with the following aws-cli:
+        # aws serverlessrepo get-application --application-id arn:aws:serverlessrepo:us-east-1:903779448426:applications/lambda-layer-awscli --query 'Version.SemanticVersion' --output text
+        SemanticVersion: 1.16.214
+
   SampleFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -31,8 +40,7 @@ Resources:
       CodeUri: ./func.d
       Runtime: provided
       Layers:
-        - arn:aws:lambda:ap-northeast-1:903779448426:layer:awscli-layer:20
-        # - !Sub "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:layer:awscli-layer-bc:6"
+        - !GetAtt lambdalayerawscli.Outputs.LayerVersionArn
       MemorySize: 512
       Policies: 
         - AWSLambdaBasicExecutionRole

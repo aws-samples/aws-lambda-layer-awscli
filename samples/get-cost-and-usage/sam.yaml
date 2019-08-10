@@ -1,38 +1,16 @@
-# AWSTemplateFormatVersion: '2010-09-09'
-# Transform: AWS::Serverless-2016-10-31
-# Description: Example API
-# Resources:
-#   SampleFunction:
-#     Type: AWS::Serverless::Function
-#     Properties:
-#       Handler: main
-#       CodeUri: func-bundle.zip
-#       Runtime: provided
-#       Layers:
-#         - !Sub "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:layer:awscli-layer-bc:6"
-#       MemorySize: 512
-#       # Policies: 
-#       #   - AWSLambdaBasicExecutionRole
-      # Role: !Sub "arn:aws:iam::${AWS::AccountId}:role/LambdaExecGetCE"
-#       Timeout: 10
-#       Events:
-#         GetResource:
-#           Type: Api
-#           Properties:
-#             Path: /demo
-#             Method: any
-
-# Outputs:
-#   DemoApiURL:
-#     Description: URL for application
-#     Value: !Sub 'https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/demo'
-#     Export:
-#       Name: !Sub 'DemoApiURL-${AWS::StackName}'
-
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: Example API
 Resources:
+  lambdalayerawscli:
+    Type: AWS::Serverless::Application
+    Properties:
+      Location:
+        ApplicationId: arn:aws:serverlessrepo:us-east-1:903779448426:applications/lambda-layer-awscli
+        # You should get the latest SemanticVersion with the following aws-cli:
+        # aws serverlessrepo get-application --application-id arn:aws:serverlessrepo:us-east-1:903779448426:applications/lambda-layer-awscli --query 'Version.SemanticVersion' --output text
+        SemanticVersion: 1.16.214
+
   SampleFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -40,7 +18,7 @@ Resources:
       CodeUri: func-bundle.zip
       Runtime: provided
       Layers:
-        - !Sub "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:layer:awscli-layer-bc:6"
+        - !GetAtt lambdalayerawscli.Outputs.LayerVersionArn
       MemorySize: 512
       # Policies: 
       #   - AWSLambdaBasicExecutionRole
