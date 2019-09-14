@@ -3,7 +3,7 @@ import sam = require('@aws-cdk/aws-sam');
 import lambda = require('@aws-cdk/aws-lambda');
 
 const AWSCLI_LAYER_APP_ARN = 'arn:aws:serverlessrepo:us-east-1:903779448426:applications/lambda-layer-awscli';
-const AWSCLI_VERSION = '1.16.213';
+const AWSCLI_VERSION = '1.16.238+1';
 
 /**
  * An AWS Lambda layer and sample function that includes the AWS CLI.
