@@ -48,7 +48,7 @@ sam-layer-package:
 	-v $(HOME)/.aws:/home/samcli/.aws \
 	-w /home/samcli/workdir \
 	-e AWS_DEFAULT_REGION=$(LAMBDA_REGION) \
-	pahud/aws-sam-cli:latest sam package --template-file sam-layer.yaml --s3-bucket $(S3BUCKET) --output-template-file /tmp/sam-layer-packaged.yaml
+	pahud/aws-sam-cli:latest sam package --template-file sam-layer.yaml --s3-bucket $(S3BUCKET) --output-template-file sam-layer-packaged.yaml
 	@echo "[OK] Now type 'make sam-layer-deploy' to deploy your Lambda layer with SAM"
 
 
@@ -59,7 +59,7 @@ sam-layer-publish:
 	-v $(HOME)/.aws:/home/samcli/.aws \
 	-w /home/samcli/workdir \
 	-e AWS_DEFAULT_REGION=$(LAMBDA_REGION) \
-	pahud/aws-sam-cli:latest sam publish --region $(LAMBDA_REGION) --template /tmp/sam-layer-packaged.yaml \
+	pahud/aws-sam-cli:latest sam publish --region $(LAMBDA_REGION) --template sam-layer-packaged.yaml \
 	--semantic-version $(shell cat AWSCLI_VERSION)
 	@echo "=> version $(shell cat AWSCLI_VERSION) published to $(LAMBDA_REGION)"
 
