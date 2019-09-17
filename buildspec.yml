@@ -17,6 +17,8 @@ phases:
         - echo "AWS_SESSION_TOKEN=$(cat session.json | jq -r .Credentials.SessionToken)" >> envfile
   build:
       commands:
+        - echo "touching sam-layer-packaged.yaml and chmod to 777 for samcli user to write in. See http://bit.ly/2Qd5Pxy"
+        - touch sam-layer-packaged.yaml && chmod 777 sam-layer-packaged.yaml
         - make publish-new-version-to-sar
   post_build:
       commands:
