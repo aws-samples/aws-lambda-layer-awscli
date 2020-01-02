@@ -2,5 +2,6 @@
 *.output
 layer/
 sam-layer-packaged.yaml
+sam-sar-packaged.yaml
 packaged.yaml
 AWSCLI_VERSION
