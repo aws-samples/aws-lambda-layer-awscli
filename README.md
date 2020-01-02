@@ -349,6 +349,68 @@ REPORT RequestId: 22ab1fe1-5edd-48af-9d7d-324a2d02efa6  Duration: 187.60 ms     
 ```
 You can develop and test your lambda function locally in this way.
 
+
+
+## Node10 and Node12 AWS Lambda runtime support
+
+To support node10 and node12 lambda runtime, at this moment, you need build this layer from scratch with python2.7 support(will support python3 in the future).
+
+```bash
+# build the layer.zip with python2.7 support for node10 and node12 runtime
+$ make layer-build-python27  # this will generate layer.zip in current directory
+# build and deploy your cusotm layer
+$ S3BUCKET={YOUR_STAGING_BUCKET_NAME} LAMBDA_REGION={REGION_CODE_TO_DEPLOY} make sam-layer-package sam-layer-deploy
+```
+
+Response
+
+```bash
+[
+    {
+        "OutputKey": "LayerVersionArn",
+        "OutputValue": "arn:aws:lambda:ap-northeast-1:112233445566:layer:awscli-layer-stack:1",
+        "Description": "ARN for the published Layer version",
+        "ExportName": "LayerVersionArn-awscli-layer-stack"
+    }
+]
+[OK] Layer version deployed.
+```
+
+Now your layer has been deployed with a new version.
+
+Create a Lambda function with `Node.js 12.x` runtime with memory no less than 256MB and timeout no less than 10 sec. And specify the following environment variables
+
+
+
+| Name            | Value                                                        |
+| --------------- | ------------------------------------------------------------ |
+| LD_LIBRARY_PATH | /opt/awscli/lib                                              |
+| PYTHONHOME      | /opt/awscli/lib/python2.7                                    |
+| PYTHONPATH      | /opt/awscli/lib/python2.7:/opt/awscli/lib/python2.7/lib-dynload |
+
+Compose your sample NodeJS Lambda function 
+
+```js
+const shell = require('child_process').execSync
+
+exports.handler = () => {
+    const version = shell('/opt/awscli/aws --version')
+    console.log(version)
+}
+```
+
+Test it and you will see the response of `aws --version` as below
+
+```
+START RequestId: 08483127-5388-40b4-90c7-a2b255db9e13 Version: $LATEST
+aws-cli/1.16.309 Python/2.7.16 Linux/4.14.138-99.102.amzn2.x86_64 exec-env/AWS_Lambda_nodejs12.x botocore/1.13.45
+2020-01-02T15:32:35.625Z	08483127-5388-40b4-90c7-a2b255db9e13	INFO	<Buffer >END RequestId: 08483127-5388-40b4-90c7-a2b255db9e13
+REPORT RequestId: 08483127-5388-40b4-90c7-a2b255db9e13	Duration: 3133.77 ms	Billed Duration: 3200 ms	Memory Size: 256 MB	Max Memory Used: 156 MB	
+
+```
+
+(see issue [#5](https://github.com/aws-samples/aws-lambda-layer-awscli/issues/5) for more details)
+
 ## License Summary
 
 This sample code is made available under the MIT-0 license. See the LICENSE file.

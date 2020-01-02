@@ -28,6 +28,13 @@ layer-build:
 	@echo "[OK] Layer built at ./layer.zip"
 	@ls -alh ./layer.zip
 	
+
+layer-build-python27:
+	@bash build.sh -f Dockerfile.python27 
+	@echo "[OK] Layer built at ./layer.zip"
+	@ls -alh ./layer.zip
+
+
 layer-zip:
 	( cd layer; zip -r ../layer.zip * )
 	
