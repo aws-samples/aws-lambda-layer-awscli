@@ -30,9 +30,9 @@ RUN yum install -y zip
 
 COPY --from=builder /opt/awscli/lib/python2.7/site-packages/ /opt/awscli/ 
 COPY --from=builder /opt/awscli/bin/ /opt/awscli/bin/ 
-COPY --from=builder /opt/awscli/bin/aws /opt/awscli/aws; 
-COPY --from=builder /opt/awscli/jq /opt/awscli/jq; 
-COPY --from=builder /usr/bin/make /opt/awscli/make; 
+COPY --from=builder /opt/awscli/bin/aws /opt/awscli/aws
+COPY --from=builder /opt/awscli/jq /opt/awscli/jq
+COPY --from=builder /usr/bin/make /opt/awscli/make
 
 # remove unnecessary files to reduce the size
 RUN rm -rf /opt/awscli/pip* /opt/awscli/setuptools* /opt/awscli/awscli/examples
@@ -47,4 +47,5 @@ RUN cd /opt; zip -r ../layer.zip *; \
 echo "/layer.zip is ready"; \
 ls -alh /layer.zip;
 
-
+#extend PATH with new layer
+ENV PATH="/opt/awscli:${PATH}"
