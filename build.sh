@@ -8,6 +8,8 @@ docker build -t awscli:amazonlinux .
 CONTAINER=$(docker run -d awscli:amazonlinux false)
 docker cp ${CONTAINER}:/layer.zip layer.zip
 docker cp ${CONTAINER}:/AWSCLI_VERSION AWSCLI_VERSION
+docker cp ${CONTAINER}:/AWSCLI_VERSION_INFO AWSCLI_VERSION_INFO
+
 
 
 exit 0
