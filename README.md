@@ -5,8 +5,6 @@
 # lambda-layer-awscli
 
 
-
-
 `lambda-layer-awscli` is a AWS Lambda Layer for AWS CLI
 
 # Features
@@ -21,48 +19,48 @@
 Layer will be installed into `/opt/awscli` in your lambda sandbox with the structure tree as below:
 
 ```
-.
-└── /opt/awscli
+/opt/awscli/
+    .
+    ├── PyYAML-5.3.1-py2.7.egg-info
     ├── aws
     ├── awscli
-    ├── awscli-1.16.99-py2.7.egg-info
+    ├── awscli-1.18.74-py2.7.egg-info
     ├── bin
     ├── botocore
-    ├── botocore-1.12.89-py2.7.egg-info
+    ├── botocore-1.16.24-py2.7.egg-info
     ├── colorama
-    ├── colorama-0.3.9-py2.7.egg-info
+    ├── colorama-0.4.3-py2.7.egg-info
     ├── concurrent
     ├── dateutil
     ├── docutils
-    ├── docutils-0.14-py2.7.egg-info
+    ├── docutils-0.15.2-py2.7.egg-info
     ├── easy_install.py
     ├── easy_install.pyc
-    ├── futures-3.2.0-py2.7.egg-info
+    ├── futures-3.3.0-py2.7.egg-info
     ├── jmespath
-    ├── jmespath-0.9.3-py2.7.egg-info
+    ├── jmespath-0.10.0-py2.7.egg-info
     ├── jq
     ├── make
     ├── pkg_resources
     ├── pyasn1
-    ├── pyasn1-0.4.5-py2.7.egg-info
-    ├── python_dateutil-2.8.0-py2.7.egg-info
-    ├── PyYAML-3.13-py2.7.egg-info
+    ├── pyasn1-0.4.8-py2.7.egg-info
+    ├── python_dateutil-2.8.0.dist-info
     ├── rsa
     ├── rsa-3.4.2-py2.7.egg-info
     ├── s3transfer
-    ├── s3transfer-0.2.0-py2.7.egg-info
-    ├── six-1.12.0-py2.7.egg-info
+    ├── s3transfer-0.3.3-py2.7.egg-info
+    ├── six-1.15.0-py2.7.egg-info
     ├── six.py
     ├── six.pyc
     ├── urllib3
-    ├── urllib3-1.24.1-py2.7.egg-info
+    ├── urllib3-1.25.9-py2.7.egg-info
     ├── wheel
-    ├── wheel-0.29.0.dist-info
+    ├── wheel-0.33.6-py2.7.egg-info
     └── yaml
 
-30 directories, 7 files
-```
 
+29 directories, 7 files
+```
 
 
 # create your own awscli layer
@@ -70,11 +68,9 @@ Layer will be installed into `/opt/awscli` in your lambda sandbox with the struc
 You have many options to create and deploy your awscli lambda layer. 
 
 
-
 ## OPTION #1 Deploy with AWS CDK from SAR(Serverless Application Repository)
 
 Check the [aws-version sample](samples/aws-version).
-
 
 
 ## OPTION #2 Deploy from SAR from console or CLI
@@ -348,6 +344,68 @@ REPORT RequestId: 22ab1fe1-5edd-48af-9d7d-324a2d02efa6  Duration: 187.60 ms     
 9801a7a9620b:lambda-layer-awscli hunhsieh $
 ```
 You can develop and test your lambda function locally in this way.
+
+
+
+## Node10 and Node12 AWS Lambda runtime support
+
+To support node10 and node12 lambda runtime, at this moment, you need build this layer from scratch with python2.7 support(will support python3 in the future).
+
+```bash
+# build the layer.zip with python2.7 support for node10 and node12 runtime
+$ make layer-build-python27  # this will generate layer.zip in current directory
+# build and deploy your cusotm layer
+$ S3BUCKET={YOUR_STAGING_BUCKET_NAME} LAMBDA_REGION={REGION_CODE_TO_DEPLOY} make sam-layer-package sam-layer-deploy
+```
+
+Response
+
+```bash
+[
+    {
+        "OutputKey": "LayerVersionArn",
+        "OutputValue": "arn:aws:lambda:ap-northeast-1:112233445566:layer:awscli-layer-stack:1",
+        "Description": "ARN for the published Layer version",
+        "ExportName": "LayerVersionArn-awscli-layer-stack"
+    }
+]
+[OK] Layer version deployed.
+```
+
+Now your layer has been deployed with a new version.
+
+Create a Lambda function with `Node.js 12.x` runtime with memory no less than 256MB and timeout no less than 10 sec. And specify the following environment variables
+
+
+
+| Name            | Value                                                        |
+| --------------- | ------------------------------------------------------------ |
+| LD_LIBRARY_PATH | /opt/awscli/lib                                              |
+| PYTHONHOME      | /opt/awscli/lib/python2.7                                    |
+| PYTHONPATH      | /opt/awscli/lib/python2.7:/opt/awscli/lib/python2.7/lib-dynload |
+
+Compose your sample NodeJS Lambda function 
+
+```js
+const shell = require('child_process').execSync
+
+exports.handler = () => {
+    const version = shell('/opt/awscli/aws --version')
+    console.log(version)
+}
+```
+
+Test it and you will see the response of `aws --version` as below
+
+```
+START RequestId: 08483127-5388-40b4-90c7-a2b255db9e13 Version: $LATEST
+aws-cli/1.16.309 Python/2.7.16 Linux/4.14.138-99.102.amzn2.x86_64 exec-env/AWS_Lambda_nodejs12.x botocore/1.13.45
+2020-01-02T15:32:35.625Z	08483127-5388-40b4-90c7-a2b255db9e13	INFO	<Buffer >END RequestId: 08483127-5388-40b4-90c7-a2b255db9e13
+REPORT RequestId: 08483127-5388-40b4-90c7-a2b255db9e13	Duration: 3133.77 ms	Billed Duration: 3200 ms	Memory Size: 256 MB	Max Memory Used: 156 MB	
+
+```
+
+(see issue [#5](https://github.com/aws-samples/aws-lambda-layer-awscli/issues/5) for more details)
 
 ## License Summary
 
