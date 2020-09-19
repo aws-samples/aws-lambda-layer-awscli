@@ -5,8 +5,6 @@
 # lambda-layer-awscli
 
 
-
-
 `lambda-layer-awscli` is a AWS Lambda Layer for AWS CLI
 
 # Features
@@ -21,48 +19,48 @@
 Layer will be installed into `/opt/awscli` in your lambda sandbox with the structure tree as below:
 
 ```
-.
-└── /opt/awscli
+/opt/awscli/
+    .
+    ├── PyYAML-5.3.1-py2.7.egg-info
     ├── aws
     ├── awscli
-    ├── awscli-1.16.99-py2.7.egg-info
+    ├── awscli-1.18.74-py2.7.egg-info
     ├── bin
     ├── botocore
-    ├── botocore-1.12.89-py2.7.egg-info
+    ├── botocore-1.16.24-py2.7.egg-info
     ├── colorama
-    ├── colorama-0.3.9-py2.7.egg-info
+    ├── colorama-0.4.3-py2.7.egg-info
     ├── concurrent
     ├── dateutil
     ├── docutils
-    ├── docutils-0.14-py2.7.egg-info
+    ├── docutils-0.15.2-py2.7.egg-info
     ├── easy_install.py
     ├── easy_install.pyc
-    ├── futures-3.2.0-py2.7.egg-info
+    ├── futures-3.3.0-py2.7.egg-info
     ├── jmespath
-    ├── jmespath-0.9.3-py2.7.egg-info
+    ├── jmespath-0.10.0-py2.7.egg-info
     ├── jq
     ├── make
     ├── pkg_resources
     ├── pyasn1
-    ├── pyasn1-0.4.5-py2.7.egg-info
-    ├── python_dateutil-2.8.0-py2.7.egg-info
-    ├── PyYAML-3.13-py2.7.egg-info
+    ├── pyasn1-0.4.8-py2.7.egg-info
+    ├── python_dateutil-2.8.0.dist-info
     ├── rsa
     ├── rsa-3.4.2-py2.7.egg-info
     ├── s3transfer
-    ├── s3transfer-0.2.0-py2.7.egg-info
-    ├── six-1.12.0-py2.7.egg-info
+    ├── s3transfer-0.3.3-py2.7.egg-info
+    ├── six-1.15.0-py2.7.egg-info
     ├── six.py
     ├── six.pyc
     ├── urllib3
-    ├── urllib3-1.24.1-py2.7.egg-info
+    ├── urllib3-1.25.9-py2.7.egg-info
     ├── wheel
-    ├── wheel-0.29.0.dist-info
+    ├── wheel-0.33.6-py2.7.egg-info
     └── yaml
 
-30 directories, 7 files
-```
 
+29 directories, 7 files
+```
 
 
 # create your own awscli layer
@@ -70,11 +68,9 @@ Layer will be installed into `/opt/awscli` in your lambda sandbox with the struc
 You have many options to create and deploy your awscli lambda layer. 
 
 
-
 ## OPTION #1 Deploy with AWS CDK from SAR(Serverless Application Repository)
 
 Check the [aws-version sample](samples/aws-version).
-
 
 
 ## OPTION #2 Deploy from SAR from console or CLI
