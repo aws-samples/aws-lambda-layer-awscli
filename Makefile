@@ -80,7 +80,7 @@ sam-layer-deploy:
 	-v $(HOME)/.aws:/home/samcli/.aws \
 	-w /home/samcli/workdir \
 	-e AWS_DEFAULT_REGION=$(LAMBDA_REGION) \
-	pahud/aws-sam-cli:latest sam deploy --template-file ./sam-layer-packaged.yaml --stack-name "$(LAYER_NAME)-stack" \
+	pahud/aws-sam-cli:latest sam deploy --profile=$(AWS_PROFILE) --template-file ./sam-layer-packaged.yaml --stack-name "$(LAYER_NAME)-stack" \
 	--parameter-overrides LayerName=$(LAYER_NAME) \
 	--capabilities CAPABILITY_IAM
 	# print the cloudformation stack outputs
