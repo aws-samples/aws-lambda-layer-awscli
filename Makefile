@@ -59,7 +59,7 @@ sam-layer-package:
 	-v $(HOME)/.aws:/home/samcli/.aws \
 	-w /home/samcli/workdir \
 	-e AWS_DEFAULT_REGION=$(LAMBDA_REGION) \
-	pahud/aws-sam-cli:latest sam package --template-file sam-layer.yaml --s3-bucket $(S3BUCKET) --output-template-file sam-layer-packaged.yaml
+	pahud/aws-sam-cli:latest sam package --profile=$(AWS_PROFILE) --template-file sam-layer.yaml --s3-bucket $(S3BUCKET) --output-template-file sam-layer-packaged.yaml
 	@echo "[OK] Now type 'make sam-layer-deploy' to deploy your Lambda layer with SAM"
 
 
@@ -70,7 +70,7 @@ sam-layer-publish:
 	-v $(HOME)/.aws:/home/samcli/.aws \
 	-w /home/samcli/workdir \
 	-e AWS_DEFAULT_REGION=$(LAMBDA_REGION) \
-	pahud/aws-sam-cli:latest sam publish --region $(LAMBDA_REGION) --template sam-layer-packaged.yaml \
+	pahud/aws-sam-cli:latest sam publish --profile=$(AWS_PROFILE) --region $(LAMBDA_REGION) --template sam-layer-packaged.yaml \
 	--semantic-version $(shell cat AWSCLI_VERSION)
 	@echo "=> version $(shell cat AWSCLI_VERSION) published to $(LAMBDA_REGION)"
 
@@ -80,7 +80,7 @@ sam-layer-deploy:
 	-v $(HOME)/.aws:/home/samcli/.aws \
 	-w /home/samcli/workdir \
 	-e AWS_DEFAULT_REGION=$(LAMBDA_REGION) \
-	pahud/aws-sam-cli:latest sam deploy --template-file ./sam-layer-packaged.yaml --stack-name "$(LAYER_NAME)-stack" \
+	pahud/aws-sam-cli:latest sam deploy --profile=$(AWS_PROFILE) --template-file ./sam-layer-packaged.yaml --stack-name "$(LAYER_NAME)-stack" \
 	--parameter-overrides LayerName=$(LAYER_NAME) \
 	--capabilities CAPABILITY_IAM
 	# print the cloudformation stack outputs
