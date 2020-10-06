@@ -41,7 +41,7 @@
     "eslint-plugin-import": "^2.22.1",
     "jest": "^26.4.2",
     "json-schema": "^0.2.5",
-    "projen": "^0.3.92",
+    "projen": "^0.3.93",
     "standard-version": "^9.0.0",
     "ts-jest": "^26.1.0",
     "ts-node": "^9.0.0",
