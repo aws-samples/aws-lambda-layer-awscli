@@ -1,0 +1,144 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot 1`] = `
+Object {
+  "Outputs": Object {
+    "FuncArn": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "AwsVersionFuncB4BFB4E0",
+          "Arn",
+        ],
+      },
+    },
+    "LayerVersionArn": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "awscliLayer",
+          "Outputs.LayerVersionArn",
+        ],
+      },
+    },
+  },
+  "Parameters": Object {
+    "AssetParameters32b1df5cc3d6b0a2c8b7461b33f9390e23639f56566f6a41b5b6b0c97ec327efArtifactHash2C454493": Object {
+      "Description": "Artifact hash for asset \\"32b1df5cc3d6b0a2c8b7461b33f9390e23639f56566f6a41b5b6b0c97ec327ef\\"",
+      "Type": "String",
+    },
+    "AssetParameters32b1df5cc3d6b0a2c8b7461b33f9390e23639f56566f6a41b5b6b0c97ec327efS3Bucket1D0A2F74": Object {
+      "Description": "S3 bucket for asset \\"32b1df5cc3d6b0a2c8b7461b33f9390e23639f56566f6a41b5b6b0c97ec327ef\\"",
+      "Type": "String",
+    },
+    "AssetParameters32b1df5cc3d6b0a2c8b7461b33f9390e23639f56566f6a41b5b6b0c97ec327efS3VersionKeyB6F5468E": Object {
+      "Description": "S3 key for asset version \\"32b1df5cc3d6b0a2c8b7461b33f9390e23639f56566f6a41b5b6b0c97ec327ef\\"",
+      "Type": "String",
+    },
+  },
+  "Resources": Object {
+    "AwsVersionFuncB4BFB4E0": Object {
+      "DependsOn": Array [
+        "AwsVersionFuncServiceRoleB63DA7A5",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Ref": "AssetParameters32b1df5cc3d6b0a2c8b7461b33f9390e23639f56566f6a41b5b6b0c97ec327efS3Bucket1D0A2F74",
+          },
+          "S3Key": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                Object {
+                  "Fn::Select": Array [
+                    0,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameters32b1df5cc3d6b0a2c8b7461b33f9390e23639f56566f6a41b5b6b0c97ec327efS3VersionKeyB6F5468E",
+                        },
+                      ],
+                    },
+                  ],
+                },
+                Object {
+                  "Fn::Select": Array [
+                    1,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameters32b1df5cc3d6b0a2c8b7461b33f9390e23639f56566f6a41b5b6b0c97ec327efS3VersionKeyB6F5468E",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            ],
+          },
+        },
+        "Handler": "main",
+        "Layers": Array [
+          Object {
+            "Fn::GetAtt": Array [
+              "awscliLayer",
+              "Outputs.LayerVersionArn",
+            ],
+          },
+        ],
+        "MemorySize": 512,
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "AwsVersionFuncServiceRoleB63DA7A5",
+            "Arn",
+          ],
+        },
+        "Runtime": "provided",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "AwsVersionFuncServiceRoleB63DA7A5": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "awscliLayer": Object {
+      "Properties": Object {
+        "Location": Object {
+          "ApplicationId": "arn:aws:serverlessrepo:us-east-1:903779448426:applications/lambda-layer-awscli",
+          "SemanticVersion": "1.18.142",
+        },
+      },
+      "Type": "AWS::Serverless::Application",
+    },
+  },
+  "Transform": "AWS::Serverless-2016-10-31",
+}
+`;
