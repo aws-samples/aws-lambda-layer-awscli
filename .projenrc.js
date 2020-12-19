@@ -1,37 +1,29 @@
-const {
-  AwsCdkTypeScriptApp,
-  GithubWorkflow,
-} = require('projen');
+const { AwsCdkTypeScriptApp } = require('projen');
 
 const AUTOMATION_TOKEN = 'GITHUB_TOKEN';
 
 const project = new AwsCdkTypeScriptApp({
-  cdkVersion: "1.63.0",
-  name: "aws-lambda-layer-awscli",
-  authorName: "Pahud Hsieh",
-  authorEmail: "hunhsieh@amazon.com",
-  repository: "https://github.com/aws-samples/aws-lambda-layer-awscli.git",
+  cdkVersion: '1.77.0',
+  name: 'aws-lambda-layer-awscli',
+  authorName: 'Pahud Hsieh',
+  authorEmail: 'hunhsieh@amazon.com',
+  repository: 'https://github.com/aws-samples/aws-lambda-layer-awscli.git',
   dependabot: false,
   antitamper: false,
   cdkDependencies: [
-    "@aws-cdk/core",
-    "@aws-cdk/aws-lambda",
-    "@aws-cdk/aws-sam",
-  ]
+    '@aws-cdk/core',
+    '@aws-cdk/aws-lambda',
+    '@aws-cdk/aws-sam',
+  ],
 });
 
-// project.addDependencies({
-//   "@pahud/aws-codebuild-patterns": Semver.caret('1.1.0'),
-// });
-
-
 // create a custom projen and yarn upgrade workflow
-const workflow = new GithubWorkflow(project, 'ProjenYarnUpgrade');
+workflow = project.github.addWorkflow('ProjenYarnUpgrade');
 
 workflow.on({
   schedule: [{
-    cron: '0 6 * * *'
-  }], // 6am every day
+    cron: '11 0 * * *',
+  }], // 0:11am every day
   workflow_dispatch: {}, // allow manual triggering
 });
 
@@ -39,18 +31,15 @@ workflow.addJobs({
   upgrade: {
     'runs-on': 'ubuntu-latest',
     'steps': [
-      ...project.workflowBootstrapSteps,
-
-      // yarn upgrade
+      { uses: 'actions/checkout@v2' },
       {
-        run: `yarn upgrade`
+        uses: 'actions/setup-node@v1',
+        with: {
+          'node-version': '10.17.0',
+        },
       },
-
-      // upgrade projen
-      {
-        run: `yarn projen:upgrade`
-      },
-
+      { run: 'yarn upgrade' },
+      { run: 'yarn projen:upgrade' },
       // submit a PR
       {
         name: 'Create Pull Request',
@@ -62,12 +51,11 @@ workflow.addJobs({
           'title': 'chore: upgrade projen and yarn',
           'body': 'This PR upgrades projen and yarn upgrade to the latest version',
           'labels': 'auto-merge',
-        }
+        },
       },
     ],
   },
 });
-
 
 
 const common_exclude = [
@@ -81,7 +69,7 @@ const common_exclude = [
   'packaged.yaml',
   'layer.zip',
   'coverage',
-  'AWSCLI_VERSION*'
+  'AWSCLI_VERSION*',
 ];
 project.npmignore.exclude(...common_exclude);
 project.gitignore.exclude(...common_exclude);
