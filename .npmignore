@@ -7,11 +7,9 @@
 /tsconfig.json
 /src
 dist
-/tsconfig.json
 /.github
 /.vscode
 /.idea
-/.projenrc.js
 /tsconfig.jest.json
 /.eslintrc.json
 cdk.out/
