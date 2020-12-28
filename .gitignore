@@ -53,7 +53,6 @@ sam-layer-packaged.yaml
 sam-sar-packaged.yaml
 packaged.yaml
 layer.zip
-coverage
 AWSCLI_VERSION*
 !/.projen/tasks.json
 !/package.json
