@@ -4,7 +4,6 @@
     "type": "git",
     "url": "https://github.com/aws-samples/aws-lambda-layer-awscli.git"
   },
-  "bin": {},
   "scripts": {
     "projen": "npx projen",
     "start": "npx projen start",
@@ -43,13 +42,12 @@
     "jest": "^26.6.3",
     "jest-junit": "^12",
     "json-schema": "^0.2.5",
-    "projen": "^0.9.2",
+    "projen": "^0.12.2",
     "standard-version": "^9.0.0",
     "ts-jest": "^26.4.4",
     "ts-node": "^9.1.1",
     "typescript": "^3.9.5"
   },
-  "peerDependencies": {},
   "dependencies": {
     "@aws-cdk/assert": "^1.77.0",
     "@aws-cdk/aws-lambda": "^1.77.0",
@@ -57,7 +55,6 @@
     "@aws-cdk/core": "^1.77.0"
   },
   "bundledDependencies": [],
-  "keywords": [],
   "license": "Apache-2.0",
   "version": "0.1.0",
   "jest": {
