@@ -9,7 +9,10 @@ junit.xml
 /test
 /.mergify.yml
 /tsconfig.json
+!/lib
 /src
+!/lib/**/*.js
+!/lib/**/*.d.ts
 dist
 /.github
 /.vscode
@@ -29,6 +32,3 @@ packaged.yaml
 layer.zip
 coverage
 AWSCLI_VERSION*
-!/lib
-!/lib/**/*.js
-!/lib/**/*.d.ts
