@@ -15,6 +15,7 @@ const project = new AwsCdkTypeScriptApp({
     '@aws-cdk/aws-lambda',
     '@aws-cdk/aws-sam',
   ],
+  defaultReleaseBranch: 'master',
 });
 
 // create a custom projen and yarn upgrade workflow
