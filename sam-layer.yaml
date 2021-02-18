@@ -16,6 +16,14 @@ Metadata:
 Transform: AWS::Serverless-2016-10-31
 Description: AWS Lambda Layer for awscli
 
+Parameters:
+  RetentionPolicy:
+    Type: String
+    Default: Retain
+    AllowedValues:
+      - Retain
+      - Delete
+
 Resources:
   LambdaLayer:
     Type: AWS::Serverless::LayerVersion
@@ -25,7 +33,7 @@ Resources:
       CompatibleRuntimes: 
         - provided
       LicenseInfo: 'Available under the MIT-0 license.'
-      RetentionPolicy: Retain
+      RetentionPolicy: !Ref RetentionPolicy
 
 Outputs:
   LayerVersionArn:
