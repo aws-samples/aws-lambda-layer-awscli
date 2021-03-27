@@ -44,7 +44,6 @@ yarn-error.log*
 !/.github/pull_request_template.md
 !/.github/workflows/build.yml
 !/.github/workflows/projenyarnupgrade.yml
-!/.github/workflows/rebuild-bot.yml
 !/.mergify.yml
 !/.npmignore
 !/.projen/deps.json
