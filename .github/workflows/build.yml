@@ -12,6 +12,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Synthesize project files
@@ -22,3 +25,6 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: Build
         run: npx projen build
+      - name: Commit and push changes (if any)
+        run: 'git diff --exit-code || (git commit -am "chore: self mutation" && git push
+          origin HEAD:${{ github.event.pull_request.head.ref }})'
