@@ -58,6 +58,12 @@ workflow.addJobs({
   },
 });
 
+project.addFields({
+  resolutions: {
+    netmask: '2.0.1',
+  },
+});
+
 
 const common_exclude = [
   'cdk.out',
