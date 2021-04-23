@@ -6,12 +6,12 @@
   },
   "scripts": {
     "clobber": "npx projen clobber",
+    "bump": "npx projen bump",
+    "unbump": "npx projen unbump",
     "compile": "npx projen compile",
     "test:compile": "npx projen test:compile",
     "test": "npx projen test",
     "build": "npx projen build",
-    "bump": "npx projen bump",
-    "release": "npx projen release",
     "test:watch": "npx projen test:watch",
     "test:update": "npx projen test:update",
     "projen:upgrade": "npx projen projen:upgrade",
@@ -41,7 +41,7 @@
     "jest": "^26.6.3",
     "jest-junit": "^12",
     "json-schema": "^0.3.0",
-    "projen": "^0.17.27",
+    "projen": "^0.17.62",
     "standard-version": "^9",
     "ts-jest": "^26.5.4",
     "ts-node": "^9.1.1",
@@ -55,7 +55,7 @@
   },
   "bundledDependencies": [],
   "license": "Apache-2.0",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "jest": {
     "testMatch": [
       "**/__tests__/**/*.ts?(x)",
