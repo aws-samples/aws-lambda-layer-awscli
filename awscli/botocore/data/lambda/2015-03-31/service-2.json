@@ -3473,7 +3473,7 @@
         "nodejs4.3",
         "nodejs6.10",
         "nodejs8.10",
-        "nodejs10.x",
+        "nodejs14.x",
         "nodejs12.x",
         "java8",
         "java11",

@@ -856,7 +856,7 @@
               "MemorySize": 128,
               "RevisionId": "1718e831-badf-4253-9518-d0644210af7b",
               "Role": "arn:aws:iam::123456789012:role/service-role/MyTestFunction-role-zgur6bf4",
-              "Runtime": "nodejs10.x",
+              "Runtime": "nodejs14.x",
               "Timeout": 3,
               "TracingConfig": {
                 "Mode": "PassThrough"
@@ -874,7 +874,7 @@
               "MemorySize": 256,
               "RevisionId": "93017fc9-59cb-41dc-901b-4845ce4bf668",
               "Role": "arn:aws:iam::123456789012:role/service-role/helloWorldPython-role-uy3l9qyq",
-              "Runtime": "nodejs10.x",
+              "Runtime": "nodejs14.x",
               "Timeout": 3,
               "TracingConfig": {
                 "Mode": "PassThrough"
