@@ -27,6 +27,7 @@ layer.zip
 packaged.yaml
 sam-layer-packaged.yaml
 sam-sar-packaged.yaml
+tsconfig.tsbuildinfo
 yarn-error.log
 !/lib
 !/lib/**/*.d.ts
