@@ -52,13 +52,18 @@
       "type": "build"
     },
     {
-      "name": "projen",
-      "version": "^0.17.62",
+      "name": "npm-check-updates",
+      "version": "^11",
       "type": "build"
     },
     {
-      "name": "standard-version",
-      "version": "^9",
+      "name": "npm-check-updates",
+      "version": "^11",
+      "type": "build"
+    },
+    {
+      "name": "projen",
+      "version": "^0.20.2",
       "type": "build"
     },
     {
@@ -67,6 +72,7 @@
     },
     {
       "name": "ts-node",
+      "version": "^9",
       "type": "build"
     },
     {
