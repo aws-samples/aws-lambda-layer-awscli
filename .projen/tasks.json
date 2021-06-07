@@ -120,6 +120,9 @@
           "exec": "yarn install --check-files"
         },
         {
+          "exec": "yarn upgrade @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser aws-cdk eslint eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import jest jest-junit json-schema npm-check-updates ts-jest ts-node typescript @aws-cdk/assert @aws-cdk/aws-lambda @aws-cdk/aws-sam @aws-cdk/core"
+        },
+        {
           "exec": "npx projen"
         }
       ]
@@ -136,6 +139,9 @@
         },
         {
           "exec": "yarn install --check-files"
+        },
+        {
+          "exec": "yarn upgrade projen"
         },
         {
           "exec": "npx projen"
