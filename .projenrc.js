@@ -1,4 +1,4 @@
-const { AwsCdkTypeScriptApp } = require('projen');
+const { AwsCdkTypeScriptApp, DependenciesUpgradeMechanism } = require('projen');
 
 const AUTOMATION_TOKEN = 'PROJEN_GITHUB_TOKEN';
 
@@ -8,14 +8,23 @@ const project = new AwsCdkTypeScriptApp({
   authorName: 'Pahud Hsieh',
   authorEmail: 'hunhsieh@amazon.com',
   repository: 'https://github.com/aws-samples/aws-lambda-layer-awscli.git',
-  dependabot: false,
+  depsUpgrade: DependenciesUpgradeMechanism.githubWorkflow({
+    workflowOptions: {
+      labels: ['auto-approve', 'auto-merge'],
+      secret: AUTOMATION_TOKEN,
+    },
+  }),
+  autoApproveOptions: {
+    secret: 'GITHUB_TOKEN',
+    allowedUsernames: ['pahud'],
+  },
   antitamper: false,
   cdkDependencies: [
     '@aws-cdk/core',
     '@aws-cdk/aws-lambda',
     '@aws-cdk/aws-sam',
   ],
-  defaultReleaseBranch: 'master',
+  defaultReleaseBranch: 'main',
 });
 
 
