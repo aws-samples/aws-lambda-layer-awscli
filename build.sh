@@ -8,14 +8,14 @@ done
 
 if [[ -n $dockerfile ]]; then
   echo "build with $dockerfile"
-  docker build -t awscli:amazonlinux . -f $dockerfile
+  docker build -t lambci/lambda:build-python3.8 . -f $dockerfile
 else
   echo "build with Dockerfile"
-  docker build -t awscli:amazonlinux .
+  docker build -t lambci/lambda:build-python3.8 .
 fi
 
-CONTAINER=$(docker run -d awscli:amazonlinux false)
+CONTAINER=$(docker run -d lambci/lambda:build-python3.8 false)
 docker cp ${CONTAINER}:/layer.zip layer.zip
-docker cp ${CONTAINER}:/AWSCLI_VERSION AWSCLI_VERSION
+docker cp ${CONTAINER}:/AWSCLI_VERSION_INFO AWSCLI_VERSION_INFO
 
 exit 0
