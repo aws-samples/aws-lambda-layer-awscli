@@ -30,6 +30,6 @@ const devEnv = {
 const app = new App();
 
 new LayerStack(app, 'awscli-layer-stack', { env: devEnv });
-new CustomLayerStack(app, 'custom-awscli-layer-stack', { env: devEnv });
+// new CustomLayerStack(app, 'custom-awscli-layer-stack', { env: devEnv });
 
 app.synth();
