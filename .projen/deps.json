@@ -19,7 +19,7 @@
     },
     {
       "name": "aws-cdk",
-      "version": "^1.77.0",
+      "version": "^1.95.2",
       "type": "build"
     },
     {
@@ -58,7 +58,6 @@
     },
     {
       "name": "projen",
-      "version": "^0.22.8",
       "type": "build"
     },
     {
@@ -76,22 +75,22 @@
     },
     {
       "name": "@aws-cdk/assert",
-      "version": "^1.77.0",
+      "version": "^1.95.2",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-lambda",
-      "version": "^1.77.0",
-      "type": "runtime"
-    },
-    {
-      "name": "@aws-cdk/aws-sam",
-      "version": "^1.77.0",
+      "version": "^1.95.2",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/core",
-      "version": "^1.77.0",
+      "version": "^1.95.2",
+      "type": "runtime"
+    },
+    {
+      "name": "@aws-cdk/lambda-layer-awscli",
+      "version": "^1.95.2",
       "type": "runtime"
     }
   ],
