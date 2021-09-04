@@ -19,7 +19,7 @@
     },
     {
       "name": "aws-cdk",
-      "version": "^1.77.0",
+      "version": "^1.95.2",
       "type": "build"
     },
     {
@@ -52,13 +52,12 @@
       "type": "build"
     },
     {
-      "name": "projen",
-      "version": "^0.17.27",
+      "name": "npm-check-updates",
+      "version": "^11",
       "type": "build"
     },
     {
-      "name": "standard-version",
-      "version": "^9",
+      "name": "projen",
       "type": "build"
     },
     {
@@ -67,6 +66,7 @@
     },
     {
       "name": "ts-node",
+      "version": "^9",
       "type": "build"
     },
     {
@@ -75,27 +75,22 @@
     },
     {
       "name": "@aws-cdk/assert",
-      "version": "^1.77.0",
+      "version": "^1.95.2",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-lambda",
-      "version": "^1.77.0",
-      "type": "runtime"
-    },
-    {
-      "name": "@aws-cdk/aws-sam",
-      "version": "^1.77.0",
+      "version": "^1.95.2",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/core",
-      "version": "^1.77.0",
+      "version": "^1.95.2",
       "type": "runtime"
     },
     {
-      "name": "@aws-cdk/core",
-      "version": "^1.77.0",
+      "name": "@aws-cdk/lambda-layer-awscli",
+      "version": "^1.95.2",
       "type": "runtime"
     }
   ],

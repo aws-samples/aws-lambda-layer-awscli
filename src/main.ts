@@ -1,45 +1,23 @@
-import * as lambda from '@aws-cdk/aws-lambda';
-import * as sam from '@aws-cdk/aws-sam';
-import * as cdk from '@aws-cdk/core';
+import { App, CfnOutput, Construct, Stack, StackProps } from '@aws-cdk/core';
+import * as layer from '@aws-cdk/lambda-layer-awscli';
+import * as customlayer from './custom-layer/custom-layer';
 
-
-const AWSCLI_LAYER_APP_ARN = 'arn:aws:serverlessrepo:us-east-1:903779448426:applications/lambda-layer-awscli';
-const AWSCLI_VERSION = '1.18.142';
-
-
-export class MyStack extends cdk.Stack {
-  constructor(scope: cdk.Construct, id: string, props: cdk.StackProps = {}) {
+export class LayerStack extends Stack {
+  constructor(scope: Construct, id: string, props: StackProps = {}) {
     super(scope, id, props);
 
+    const awscliLayer = new layer.AwsCliLayer(this, 'AwsCliLayer');
+    new CfnOutput(this, 'LayerVersionArn', { value: awscliLayer.layerVersionArn });
 
-    const resource = new sam.CfnApplication(this, 'awscliLayer', {
-      location: {
-        applicationId: AWSCLI_LAYER_APP_ARN,
-        semanticVersion: AWSCLI_VERSION,
-      },
-    });
+  }
+}
 
-    const layerVersionArn = resource.getAtt('Outputs.LayerVersionArn').toString();
+export class CustomLayerStack extends Stack {
+  constructor(scope: Construct, id: string, props: StackProps = {}) {
+    super(scope, id, props);
 
-    const func = new lambda.Function(this, 'AwsVersionFunc', {
-      code: new lambda.AssetCode('./samples/aws-version/func.d'),
-      handler: 'main',
-      runtime: lambda.Runtime.PROVIDED,
-      memorySize: 512,
-    });
-
-    func.addLayers(
-      lambda.LayerVersion.fromLayerVersionArn(this, 'LayerVersion', layerVersionArn),
-    );
-
-    new cdk.CfnOutput(this, 'LayerVersionArn', {
-      value: layerVersionArn,
-    });
-
-    new cdk.CfnOutput(this, 'FuncArn', {
-      value: func.functionArn,
-    });
-
+    const awscliLayer = new customlayer.AwsCliLayer(this, 'CustomAwsCliLayer');
+    new CfnOutput(this, 'LayerVersionArn', { value: awscliLayer.layerVersionArn });
   }
 }
 
@@ -49,9 +27,9 @@ const devEnv = {
   region: process.env.CDK_DEFAULT_REGION,
 };
 
-const app = new cdk.App();
+const app = new App();
 
-new MyStack(app, 'my-stack-dev', { env: devEnv });
-// new MyStack(app, 'my-stack-prod', { env: prodEnv });
+new LayerStack(app, 'awscli-layer-stack', { env: devEnv });
+new CustomLayerStack(app, 'custom-awscli-layer-stack', { env: devEnv });
 
 app.synth();
