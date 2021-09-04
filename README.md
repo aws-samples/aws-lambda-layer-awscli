@@ -44,7 +44,7 @@ awscli-layer-stack.LayerVersionArn = arn:aws:lambda:us-east-1:123456789012:layer
 
 ## Customize your layer
 
-The [AwsCliLayer](https://github.com/aws/aws-cdk/blob/6e2a3e0f855221df98f78f6465586d5524f5c7d5/packages/%40aws-cdk/lambda-layer-awscli/lib/awscli-layer.ts#L10-L20) from AWS CDK upstream does not allow you to pass customized Dockerfile(see the [built-in Dockerfile](https://github.com/aws/aws-cdk/blob/master/packages/%40aws-cdk/lambda-layer-awscli/layer/Dockerfile)). To customize the layer, we simply create our own `AwsCliLayer` construct class in our CDK application with our custom `Dockerfile`.
+The [AwsCliLayer](https://github.com/aws/aws-cdk/blob/6e2a3e0f855221df98f78f6465586d5524f5c7d5/packages/%40aws-cdk/lambda-layer-awscli/lib/awscli-layer.ts#L10-L20) from AWS CDK upstream does not allow you to pass custom Dockerfile(see the [built-in Dockerfile](https://github.com/aws/aws-cdk/blob/master/packages/%40aws-cdk/lambda-layer-awscli/layer/Dockerfile)). To customize the layer, we simply create our own `AwsCliLayer` construct class in our CDK application with our custom `Dockerfile`.
 
 ```sh
 cd src/custom-layer
