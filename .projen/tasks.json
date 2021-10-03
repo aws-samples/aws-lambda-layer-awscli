@@ -181,6 +181,18 @@
           "exec": "cdk diff"
         }
       ]
+    },
+    "gitpod:prebuild": {
+      "name": "gitpod:prebuild",
+      "description": "Prebuild setup for Gitpod",
+      "steps": [
+        {
+          "exec": "yarn install --frozen-lockfile --check-files"
+        },
+        {
+          "exec": "npx projen compile"
+        }
+      ]
     }
   },
   "env": {
