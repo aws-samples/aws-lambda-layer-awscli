@@ -13,7 +13,6 @@ const project = new AwsCdkTypeScriptApp({
     '@aws-cdk/lambda-layer-awscli',
     '@aws-cdk/aws-lambda',
   ],
-  minNodeVersion: '14.17.0',
   depsUpgradeOptions: {
     ignoreProjen: false,
     workflowOptions: {

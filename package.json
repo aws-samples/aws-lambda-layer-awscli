@@ -53,9 +53,6 @@
     "@aws-cdk/lambda-layer-awscli": "^1.95.2"
   },
   "bundledDependencies": [],
-  "engines": {
-    "node": ">= 14.17.0"
-  },
   "license": "Apache-2.0",
   "version": "0.0.0",
   "jest": {
