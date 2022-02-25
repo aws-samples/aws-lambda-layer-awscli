@@ -1,5 +1,5 @@
 {
-  "app": "npx ts-node --prefer-ts-exts src/main.ts",
+  "app": "npx ts-node -P tsconfig.json --prefer-ts-exts src/main.ts",
   "context": {
     "aws-cdk:enableDiffNoFail": true,
     "@aws-cdk/aws-apigateway:usagePlanKeyOrderInsensitiveId": true,
@@ -16,6 +16,7 @@
     "@aws-cdk/aws-cloudfront:defaultSecurityPolicyTLSv1.2_2021": true
   },
   "output": "cdk.out",
+  "build": "npx projen bundle",
   "watch": {
     "include": [
       "src/**/*.ts",
